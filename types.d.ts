@@ -6,3 +6,13 @@ type Onboarding = {
     image: ImageSourcePropType;
 }
 
+export interface RegisterInput {
+    password: string;
+  
+    firstName: string;
+  
+    lastName: string;
+  
+    email: string;
+  }
+
