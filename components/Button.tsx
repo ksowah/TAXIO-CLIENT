@@ -6,13 +6,14 @@ interface Props {
     onPress?: () => void
     style?: any 
     text?: any
+    loading?: boolean
 }
 
-const Button = ({title, onPress, style, text}: Props) => {
+const Button = ({title, onPress, style, text, loading}: Props) => {
   return (
-    <TouchableOpacity onPress={onPress} activeOpacity={.5} style={tw`w-[90%] bg-[#FEBB1B] items-center justify-center shadow-[#FEBB1B] shadow-2xl rounded-full mx-6 h-[3rem] ${style}`}>
+    <TouchableOpacity onPress={onPress} activeOpacity={.5} style={tw`w-[90%] bg-[#FEBB1B] items-center justify-center shadow-[#FEBB1B] shadow-2xl rounded-3xl mx-6 h-[3.1rem] ${style}`}>
        <Text style={tw`text-lg ${text} font-bold text-center`}>
-          {title}
+          {loading ? "Loading..." : title}
        </Text>
     </TouchableOpacity>
   )
