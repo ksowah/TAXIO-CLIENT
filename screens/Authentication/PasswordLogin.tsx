@@ -75,14 +75,13 @@ const PasswordLogin = ({ navigation }: any) => {
                 inputContainerStyle={tw`border-b-0 bg-[#1F222A] h-13 rounded-2xl px-2 text-center`}
                 placeholder={"Email"}
                 placeholderTextColor={"#797a7c"}
-                autoComplete="email"
                 autoCapitalize="none"
                 keyboardType="email-address"
                 textContentType="emailAddress"
+                autoComplete="email"
                 inputStyle={tw`text-white`}
                 autoCorrect={false}
                 returnKeyType="next"
-                returnKeyLabel="next"
                 leftIcon={
                   <MaterialIcons name="email" size={24} color="#9e9e9e" />
                 }
@@ -115,7 +114,7 @@ const PasswordLogin = ({ navigation }: any) => {
 
               <Button onPress={Login} loading={loading} title="Sign in" text={"text-sm"} />
 
-              <Text style={tw`text-[#e7ab1b] mt-4 text-center`}>
+              <Text onPress={() => navigation.navigate("ForgotPassword")} style={tw`text-[#e7ab1b] mt-4 text-center`}>
                 Forgot the password?
               </Text>
             </View>
@@ -140,13 +139,13 @@ const PasswordLogin = ({ navigation }: any) => {
 
             <View style={tw`w-full items-center justify-center`}>
               <Text style={tw`text-white mt-6`}>
-                Already have an account?
+                Don't have an account?
                 <Text
                   style={tw`text-[#c18f1c]`}
                   onPress={() => navigation.navigate("SignUp")}
                 >
                   {" "}
-                  Sign in
+                  Sign up
                 </Text>
               </Text>
             </View>

@@ -9,11 +9,11 @@ import {
   Keyboard
 } from "react-native";
 import tw from "twrnc";
-import BackHeader from "../../components/BackHeader";
-import Button from "../../components/Button";
-import { CONFIRM_USER } from "../../mutations/confirmUserMutation";
+import BackHeader from "../../../components/BackHeader";
+import Button from "../../../components/Button";
+import { CONFIRM_CHANGE_PASSWORD } from "../../../mutations/confirmChangePasswordMutation";
 
-const CodeVerification = ({route, navigation}: any) => {
+const VerifyEmail = ({route, navigation}: any) => {
   const firstInput: any = useRef();
   const secondInput: any = useRef();
   const thirdInput: any = useRef();
@@ -26,26 +26,24 @@ const CodeVerification = ({route, navigation}: any) => {
 
   const verificationCode = `${otp[1] + otp[2] + otp[3] + otp[4]}`;
 
-  const [confirmUser, { loading }] = useMutation(CONFIRM_USER, {
+  const [confirmChangePassword, { loading }] = useMutation(CONFIRM_CHANGE_PASSWORD, {
     variables: { code: verificationCode, email },
   });
 
-  const ConfirmUser = () => {
+  const verifyChangePassword = () => {
     if(verificationCode === ""){
       alert("Please enter verification code")
-      return
     }else{
-      confirmUser()
-      .then((res) => {
-        console.log(res);
-        navigation.navigate("PasswordLogin");
-      })
-      .catch((err) => {
-        console.log(err.message);
-        alert(err.message);
-      });
+        confirmChangePassword().then((res) => {
+            console.log(res.data)            
+            navigation.replace("ChangePassword", {verificationCode})
+            setOtp({ 1: "", 2: "", 3: "", 4: "", });
+        }).catch((err) => {
+          console.log(err.message)
+          alert(err.message)
+        })
     }
-  };
+  }
 
 
   return (
@@ -116,11 +114,11 @@ const CodeVerification = ({route, navigation}: any) => {
                 setOtp({ ...otp, 4: text });
                 !text && thirdInput.current.focus();
               }}
-              onSubmitEditing={ConfirmUser}
+              onSubmitEditing={verifyChangePassword}
             />
           </View>
         </View>
-        <Button loading={loading} onPress={ConfirmUser} title="Continue" />
+        <Button onPress={verifyChangePassword} title="Continue" />
 
         </View>
       </SafeAreaView>
@@ -128,4 +126,4 @@ const CodeVerification = ({route, navigation}: any) => {
   );
 };
 
-export default CodeVerification;
+export default VerifyEmail;
