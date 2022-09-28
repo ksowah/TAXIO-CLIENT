@@ -31,7 +31,11 @@ const CodeVerification = ({route, navigation}: any) => {
   });
 
   const ConfirmUser = () => {
-    confirmUser()
+    if(verificationCode === ""){
+      alert("Please enter verification code")
+      return
+    }else{
+      confirmUser()
       .then((res) => {
         console.log(res);
         navigation.navigate("PasswordLogin");
@@ -40,6 +44,7 @@ const CodeVerification = ({route, navigation}: any) => {
         console.log(err.message);
         alert(err.message);
       });
+    }
   };
 
 
