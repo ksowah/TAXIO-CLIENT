@@ -11,6 +11,9 @@ import UpdateProfile from "../../screens/AccountSetup/UpdateProfile";
 import CodeVerification from "../../screens/Authentication/CodeVerification";
 import { useQuery } from "@apollo/client";
 import { ME_QUERY } from "../../queries/meQuery";
+import ForgotPassword from "../../screens/Authentication/fogotPassword/ForgotPassword";
+import VerifyEmail from "../../screens/Authentication/fogotPassword/VerifyEmail";
+import ChangePassword from "../../screens/Authentication/fogotPassword/ChangePassword";
 
 const Stack = createNativeStackNavigator();
 
@@ -53,6 +56,9 @@ const Base: any = () => {
             <Stack.Screen options={{ headerShown: false }} name="SignUp" component={SignUp}/>
             <Stack.Screen options={{ headerShown: false }} name="CodeVerification" component={CodeVerification}/>
             <Stack.Screen options={{ headerShown: false }} name="PasswordLogin" component={PasswordLogin}/>
+            <Stack.Screen options={{ headerShown: false }} name="ForgotPassword" component={ForgotPassword}/>
+            <Stack.Screen options={{ headerShown: false }} name="VerifyEmail" component={VerifyEmail}/>
+            <Stack.Screen options={{ headerShown: false }} name="ChangePassword" component={ChangePassword}/>
             </>
           )}
           <Stack.Screen options={{ headerShown: false }} name="UpdateProfile" component={UpdateProfile}/>
