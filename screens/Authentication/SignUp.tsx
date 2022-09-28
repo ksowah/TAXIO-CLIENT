@@ -145,7 +145,7 @@ const SignUp = ({ navigation }: any) => {
                 Already have an account?
                 <Text
                   style={tw`text-[#c18f1c]`}
-                  onPress={() => navigation.navigate("Login")}
+                  onPress={() => navigation.navigate("PasswordLogin")}
                 >
                   {" "}
                   Sign in
