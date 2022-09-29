@@ -28,7 +28,8 @@
     "twrnc": "^3.4.0",
     "expo-web-browser": "~11.0.0",
     "expo-auth-session": "~3.7.1",
-    "expo-random": "~12.3.0"
+    "expo-random": "~12.3.0",
+    "@react-native-community/datetimepicker": "6.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
