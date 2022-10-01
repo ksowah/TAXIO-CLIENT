@@ -2,7 +2,6 @@ import { useState, useEffect, ReactElement } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
-import Home from "../../screens/Home";
 import Onboarding from "../../screens/Onboarding";
 import Login from "../../screens/Authentication/Login";
 import SignUp from "../../screens/Authentication/SignUp";
@@ -14,10 +13,11 @@ import { ME_QUERY } from "../../queries/meQuery";
 import ForgotPassword from "../../screens/Authentication/fogotPassword/ForgotPassword";
 import VerifyEmail from "../../screens/Authentication/fogotPassword/VerifyEmail";
 import ChangePassword from "../../screens/Authentication/fogotPassword/ChangePassword";
+import Home from "../../screens/Home";
 
 const Stack = createNativeStackNavigator();
 
-const Base: any = () => {
+const Base: any = () => {  
   const [isAppFirstLaunched, setIsAppFirstLaunched] = useState<Boolean | null>(
     null
   );
@@ -28,12 +28,11 @@ const Base: any = () => {
       setIsAppFirstLaunched(true);
       AsyncStorage.setItem("isAppFirstLaunched", "false");
     } else {
-      setIsAppFirstLaunched(false); // toggle 
+      setIsAppFirstLaunched(false); // toggle
     }
   };
 
-
- const { data: session } = useQuery(ME_QUERY);
+  const { data: session } = useQuery(ME_QUERY);
 
   useEffect(() => {
     check();
@@ -52,21 +51,61 @@ const Base: any = () => {
           )}
           {!session?.me && (
             <>
-            <Stack.Screen options={{ headerShown: false }} name="Login" component={Login}/>
-            <Stack.Screen options={{ headerShown: false }} name="SignUp" component={SignUp}/>
-            <Stack.Screen options={{ headerShown: false }} name="CodeVerification" component={CodeVerification}/>
-            <Stack.Screen options={{ headerShown: false }} name="PasswordLogin" component={PasswordLogin}/>
-            <Stack.Screen options={{ headerShown: false }} name="ForgotPassword" component={ForgotPassword}/>
-            <Stack.Screen options={{ headerShown: false }} name="VerifyEmail" component={VerifyEmail}/>
-            <Stack.Screen options={{ headerShown: false }} name="ChangePassword" component={ChangePassword}/>
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="Login"
+                component={Login}
+              />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="SignUp"
+                component={SignUp}
+              />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="CodeVerification"
+                component={CodeVerification}
+              />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="PasswordLogin"
+                component={PasswordLogin}
+              />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="ForgotPassword"
+                component={ForgotPassword}
+              />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="VerifyEmail"
+                component={VerifyEmail}
+              />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="ChangePassword"
+                component={ChangePassword}
+              />
             </>
           )}
-          <Stack.Screen options={{ headerShown: false }} name="UpdateProfile" component={UpdateProfile}/>
-          <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
+         {
+          !session?.me.profileUpdated && (
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="UpdateProfile"
+              component={UpdateProfile}
+            />
+          )
+         }
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Home"
+            component={Home}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     )
   );
-}
+};
 
-export default Base
+export default Base;
