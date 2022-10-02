@@ -17,9 +17,10 @@ import CheckBox from "../../components/CheckBox";
 import Button from "../../components/Button";
 import LineText from "../../components/LineText";
 import BackHeader from "../../components/BackHeader";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { LOGIN } from "../../mutations/loginMutation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ME_QUERY } from "../../queries/meQuery";
 
 const PasswordLogin = ({ navigation }: any) => {
   const inputRef = useRef(null);
@@ -38,6 +39,8 @@ const PasswordLogin = ({ navigation }: any) => {
     );
   };
 
+  // get session
+  const { data: session } = useQuery(ME_QUERY);
 
   const [login, { loading }] = useMutation(LOGIN, {
     variables: { password, email },
@@ -49,7 +52,8 @@ const PasswordLogin = ({ navigation }: any) => {
         setEmail("");
         setPassword("");
         AsyncStorage.setItem("accessToken", res.data.login.token);
-        navigation.replace("UpdateProfile")
+      }).then(() => {
+        navigation.replace(!session?.me?.profileUpdated ? "UpdateProfile": "Home");
       })
       .catch((err) => {
         console.log(err.message);
@@ -61,7 +65,7 @@ const PasswordLogin = ({ navigation }: any) => {
     <KeyboardAvoidingView behavior="padding" style={tw`flex-1 w-full`}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <SafeAreaView style={tw`flex-1 bg-[#181A20]`}>
-          <BackHeader />
+          <BackHeader navigation={navigation}/>
 
           <View style={tw`flex-1 bg-[#181A20] items-start justify-center`}>
             <View style={tw`px-4 mb-14`}>
