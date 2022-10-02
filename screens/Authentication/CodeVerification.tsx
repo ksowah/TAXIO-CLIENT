@@ -11,6 +11,7 @@ import {
 import tw from "twrnc";
 import BackHeader from "../../components/BackHeader";
 import Button from "../../components/Button";
+import ModalPoup from "../../components/ModalPopup";
 import { CONFIRM_USER } from "../../mutations/confirmUserMutation";
 
 const CodeVerification = ({route, navigation}: any) => {
@@ -23,6 +24,7 @@ const CodeVerification = ({route, navigation}: any) => {
 
   const { email } = route.params
   const [Email, setEmail] = useState(email)
+  const [showModal, setShowModal] = useState(false)
 
   const verificationCode = `${otp[1] + otp[2] + otp[3] + otp[4]}`;
 
@@ -38,7 +40,7 @@ const CodeVerification = ({route, navigation}: any) => {
       confirmUser()
       .then((res) => {
         console.log(res);
-        navigation.navigate("PasswordLogin");
+        setShowModal(true)
       })
       .catch((err) => {
         console.log(err.message);
@@ -51,6 +53,18 @@ const CodeVerification = ({route, navigation}: any) => {
   return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={tw`flex-1 bg-[#181A20]`}>
+
+      <ModalPoup
+            onPress={() => {
+              navigation.navigate("PasswordLogin")
+              setShowModal(false)
+            }}
+            setShowModal={setShowModal}
+            showModal={showModal}
+            image={require("../../assets/profile.png")}
+            title={"Congratulations"}
+            subTitle={"Your account is ready to use. You can now proceed to login"}
+          />
 
         <View style={tw`h-[60%] justify-between`}>
         <BackHeader title="Enter Verification Code" />

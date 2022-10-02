@@ -61,7 +61,7 @@ const SignUp = ({ navigation }: any) => {
     <KeyboardAvoidingView behavior="padding" style={tw`flex-1 w-full`}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <SafeAreaView style={tw`flex-1 bg-[#181A20]`}>
-          <BackHeader />
+          <BackHeader navigation={navigation}/>
 
           <View style={tw`flex-1 bg-[#181A20] items-start justify-center`}>
             <View style={tw`px-4 mb-14`}>

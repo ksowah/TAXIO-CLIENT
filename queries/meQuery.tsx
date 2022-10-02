@@ -7,6 +7,7 @@ export const ME_QUERY = gql`
     me {
       _id
       email
+      profileUpdated
     }
   }
 `
