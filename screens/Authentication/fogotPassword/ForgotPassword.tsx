@@ -48,7 +48,7 @@ const ForgotPassword = ({ navigation }: any) => {
               <Image source={require("../../../assets/forgot-password.png")} />
             </View>
 
-            <Text style={tw`text-white px-4 text-[16px] mb-6`}>
+            <Text style={tw`text-white px-4 text-[16px] mb-6 text-center`}>
                 Enter your email address and we will send you a verification code to reset your password.
             </Text>
 
