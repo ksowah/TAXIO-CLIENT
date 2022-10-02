@@ -17,12 +17,14 @@ import {
   import { FontAwesome } from "@expo/vector-icons";
   import { FORGOT_PASSWORD } from "../../../mutations/forgotPasswordMutation";
 import { CHANGE_PASSWORD } from "../../../mutations/changePasswordMutation";
+import ModalPoup from "../../../components/ModalPopup";
   
   const ForgotPassword = ({ route, navigation }: any) => {
     const inputRef = useRef(null);
   
     const [password, setPassword] = useState("");
     const [password2, setPassword2] = useState("");
+    const [showModal, setShowModal] = useState(false)
 
     const { verificationCode } = route.params; 
 
@@ -42,7 +44,7 @@ import { CHANGE_PASSWORD } from "../../../mutations/changePasswordMutation";
             changePassword()
             .then((res) => {
                 console.log(res);
-                navigation.navigate("PasswordLogin");
+                setShowModal(true)
                 setPassword("");
                 setPassword2("");
             })
@@ -58,6 +60,18 @@ import { CHANGE_PASSWORD } from "../../../mutations/changePasswordMutation";
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <SafeAreaView style={tw`flex-1 bg-[#181A20]`}>
             <BackHeader title="Create New Password" navigation={navigation} />
+
+            <ModalPoup
+            onPress={() => {
+              setShowModal(false)
+              navigation.replace("PasswordLogin");
+            }}
+            setShowModal={setShowModal}
+            showModal={showModal}
+            image={require("../../../assets/password-reset.png")}
+            title={"Congratulations!"}
+            subTitle={"Your password has been reset successfully!"}
+          />
   
             <View style={tw`flex-1 bg-[#181A20] items-start`}>
               <View style={tw`w-full items-center mb-4`}>
