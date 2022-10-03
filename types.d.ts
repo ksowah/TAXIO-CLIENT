@@ -6,6 +6,18 @@ type Onboarding = {
     image: ImageSourcePropType;
 }
 
+interface Theme {
+    base: string,
+    text: string,
+    border: string,
+    input_base: string,
+    yellow: string,
+    fade_text: string,
+    map_items: string
+    mode: boolean
+    fade_yellow: string
+}
+
 export interface RegisterInput {
     password: string;
   
