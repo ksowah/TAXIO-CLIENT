@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { View } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import tw from "twrnc"
+import { Theme } from "../types";
+import themeContext from "./config/themeContext";
 
 
 const DropDown = ({setGenderValue, genderValue}: any) => {
@@ -12,11 +14,12 @@ const DropDown = ({setGenderValue, genderValue}: any) => {
     { label: "Prefer Not to Say", value: "neutral" },
   ]);
 
+  const theme: Theme = useContext(themeContext)
 
   return (
     <View style={tw`w-full px-2`}>
       <DropDownPicker
-        style={tw`bg-[#1F222A] border-0 rounded-2xl`}
+        style={tw`bg-[${theme.input_base}] border-0 rounded-2xl`}
         open={genderOpen}
         value={genderValue} //genderValue
         items={gender}
@@ -24,12 +27,12 @@ const DropDown = ({setGenderValue, genderValue}: any) => {
         setValue={setGenderValue}
         setItems={setGender}
         placeholder="Gender"
-        placeholderStyle={tw`text-[#797a7c]`}
+        placeholderStyle={tw`text-[${theme.text}]`}
         onChangeValue={(value) => setGenderValue(value)}
         zIndex={3000}
         zIndexInverse={1000}
-        textStyle={tw`text-[#fff] text-[1.1rem]`}
-        dropDownContainerStyle={tw`bg-[#1F222A] border-0`}
+        textStyle={tw`text-[${theme.text}] text-[1.1rem]`}
+        dropDownContainerStyle={tw`bg-[${theme.input_base}] border-0`}
       />
     </View>
   );
