@@ -12,13 +12,15 @@ import { Input } from "@rneui/themed";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
 import CheckBox from "../../components/CheckBox";
 import Button from "../../components/Button";
 import LineText from "../../components/LineText";
 import BackHeader from "../../components/BackHeader";
 import { useMutation } from "@apollo/client";
 import { REGISTER } from "../../mutations/registerMutation";
+import themeContext from "../../components/config/themeContext";
+import { Theme } from "../../types";
 
 const SignUp = ({ navigation }: any) => {
   const [email, setEmail] = useState("");
@@ -26,11 +28,13 @@ const SignUp = ({ navigation }: any) => {
 
   const inputRef = useRef(null);
 
+  const theme: Theme = useContext(themeContext);
+
   const ProviderCube = ({ Icon }: any) => {
     return (
       <TouchableOpacity
         activeOpacity={0.5}
-        style={tw`w-20 h-16 bg-[#1F222A] mr-4 rounded-2xl items-center justify-center`}
+        style={tw`w-20 h-16 bg-[${theme.input_base}] border border-[${theme.border}] mr-4 rounded-2xl items-center justify-center`}
       >
         {Icon}
       </TouchableOpacity>
@@ -60,26 +64,26 @@ const SignUp = ({ navigation }: any) => {
   return (
     <KeyboardAvoidingView behavior="padding" style={tw`flex-1 w-full`}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <SafeAreaView style={tw`flex-1 bg-[#181A20]`}>
+        <SafeAreaView style={tw`flex-1 bg-[${theme.base}]`}>
           <BackHeader navigation={navigation}/>
 
-          <View style={tw`flex-1 bg-[#181A20] items-start justify-center`}>
+          <View style={tw`flex-1 bg-[${theme.base}] items-start justify-center`}>
             <View style={tw`px-4 mb-14`}>
-              <Text style={tw`text-white text-5xl`}>Create your Account</Text>
+              <Text style={tw`text-[${theme.text}] text-5xl`}>Create your Account</Text>
             </View>
 
             <View style={tw`px-1 w-full mb-8`}>
               <Input
                 ref={inputRef}
                 containerStyle={tw`w-full`}
-                inputContainerStyle={tw`border-b-0 bg-[#1F222A] h-13 rounded-2xl px-2 text-center`}
+                inputContainerStyle={tw`border-b-0 bg-[${theme.input_base}] h-13 rounded-2xl px-2 text-center`}
                 placeholder={"Email"}
                 placeholderTextColor={"#797a7c"}
                 autoComplete="email"
                 autoCapitalize="none"
                 keyboardType="email-address"
                 textContentType="emailAddress"
-                inputStyle={tw`text-white`}
+                inputStyle={tw`text-[${theme.text}]`}
                 autoCorrect={false}
                 returnKeyType="next"
                 returnKeyLabel="next"
@@ -93,9 +97,9 @@ const SignUp = ({ navigation }: any) => {
 
               <Input
                 containerStyle={tw`w-full`}
-                inputContainerStyle={tw`border-b-0 bg-[#1F222A] h-13 rounded-2xl px-2 text-center`}
+                inputContainerStyle={tw`border-b-0 bg-[${theme.input_base}] h-13 rounded-2xl px-2 text-center`}
                 placeholder={"Password"}
-                inputStyle={tw`text-white`}
+                inputStyle={tw`text-[${theme.text}]`}
                 placeholderTextColor={"#797a7c"}
                 keyboardType="default"
                 textContentType="password"
@@ -136,12 +140,12 @@ const SignUp = ({ navigation }: any) => {
                 Icon={<FontAwesome5 name="google" size={26} color="#fbbc05" />}
               />
               <ProviderCube
-                Icon={<FontAwesome5 name="apple" size={26} color="#fff" />}
+                Icon={<FontAwesome5 name="apple" size={26} color="#000" />}
               />
             </View>
 
             <View style={tw`w-full items-center justify-center`}>
-              <Text style={tw`text-white mt-6`}>
+              <Text style={tw`text-[${theme.fade_text}] mt-6`}>
                 Already have an account?
                 <Text
                   style={tw`text-[#c18f1c]`}

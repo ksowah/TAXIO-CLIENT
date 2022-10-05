@@ -1,7 +1,9 @@
 import { Image, StyleSheet, Dimensions, Text, View } from "react-native"
-import { Onboarding } from "../types"
+import { Onboarding, Theme } from "../types"
 import tw from "twrnc"
 import Button from "./Button"
+import themeContext from "./config/themeContext"
+import { useContext } from "react"
 
 interface Props {
     item: Onboarding
@@ -10,11 +12,14 @@ interface Props {
 const { width } = Dimensions.get("window")
 
 const Slide = ({item}: Props) => {
+
+    const theme: Theme = useContext(themeContext)
+
   return (
         // create Slide component
         <View style={[styles.container, {width}]}>
             <Image source={item.image} style={styles.image} />
-            <Text style={styles.description}>{item.description}</Text>
+            <Text style={[styles.description, tw`text-[${theme.text}]`]}>{item.description}</Text>
         </View>
   )
 }
@@ -33,7 +38,6 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     description: {
-        color: '#fff',
         fontSize: 30,
         textAlign: 'center',
         marginHorizontal: 20,

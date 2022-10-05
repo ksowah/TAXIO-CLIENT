@@ -10,16 +10,20 @@ import {
 import tw from "twrnc";
 import { Input } from "@rneui/themed";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
 import { useMutation } from "@apollo/client";
 import BackHeader from "../../../components/BackHeader";
 import Button from "../../../components/Button";
 import { FORGOT_PASSWORD } from "../../../mutations/forgotPasswordMutation";
+import { Theme } from "../../../types";
+import themeContext from "../../../components/config/themeContext";
 
 const ForgotPassword = ({ navigation }: any) => {
   const inputRef = useRef(null);
 
   const [email, setEmail] = useState("");
+
+  const theme: Theme = useContext(themeContext)
 
   const [forgotPassword, { loading }] = useMutation(FORGOT_PASSWORD, {
     variables: { email },
@@ -40,15 +44,15 @@ const ForgotPassword = ({ navigation }: any) => {
   return (
     <KeyboardAvoidingView behavior="padding" style={tw`flex-1 w-full`}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <SafeAreaView style={tw`flex-1 bg-[#181A20]`}>
+        <SafeAreaView style={tw`flex-1 bg-[${theme.base}]`}>
           <BackHeader title="Forgot Password" navigation={navigation} />
 
-          <View style={tw`flex-1 bg-[#181A20] items-start`}>
+          <View style={tw`flex-1 bg-[${theme.base}] items-start`}>
             <View style={tw`w-full items-center mb-4`}>
-              <Image source={require("../../../assets/forgot-password.png")} />
+              <Image source={theme.mode ? require("../../../assets/forgot-password.png") : require("../../../assets/lightTheme/light-forgot-password.png")} />
             </View>
 
-            <Text style={tw`text-white px-4 text-[16px] mb-6 text-center`}>
+            <Text style={tw`text-[${theme.text}] px-4 text-[16px] mb-6 text-center`}>
                 Enter your email address and we will send you a verification code to reset your password.
             </Text>
 
@@ -56,14 +60,14 @@ const ForgotPassword = ({ navigation }: any) => {
               <Input
                 ref={inputRef}
                 containerStyle={tw`w-full mb-4`}
-                inputContainerStyle={tw`border-b-0 bg-[#1F222A] h-13 rounded-2xl px-2 text-center`}
+                inputContainerStyle={tw`border-b-0 bg-[${theme.input_base}] h-13 rounded-2xl px-2 text-center`}
                 placeholder={"Email"}
                 placeholderTextColor={"#797a7c"}
                 autoComplete="email"
                 autoCapitalize="none"
                 keyboardType="email-address"
                 textContentType="emailAddress"
-                inputStyle={tw`text-white`}
+                inputStyle={tw`text-[${theme.text}]`}
                 autoCorrect={false}
                 returnKeyType="next"
                 returnKeyLabel="next"

@@ -1,35 +1,40 @@
 import { SafeAreaView, FlatList, Text, View, Dimensions } from "react-native";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import tw from "twrnc";
 import Button from "../components/Button";
 import Slide from "../components/Slide";
+import theme from "../components/config/colors";
+import { Theme } from "../types";
+import themeContext from "../components/config/themeContext";
 
 const { height, width } = Dimensions.get("window");
 
-const slides = [
-  {
-    id: "1",
-    description: "We provide professional taxi services for you",
-    image: require("../assets/car.png"),
-  },
-  {
-    id: "2",
-    description: "Your satisfaction is our number one priority",
-    image: require("../assets/person1.png"),
-  },
-  {
-    id: "3",
-    description: "Let's make your day great with Taxio right now!",
-    image: require("../assets/person2.png"),
-  },
-];
 
 
 const Onboarding = ({ navigation }: any) => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const ref: any = useRef(null);
 
+    const theme: Theme = useContext(themeContext);
 
+    const slides = [
+      {
+        id: "1",
+        description: "We provide professional taxi services for you",
+        image: theme.mode ? require("../assets/car.png") : require("../assets/lightTheme/light-car.png"),
+      },
+      {
+        id: "2",
+        description: "Your satisfaction is our number one priority",
+        image: theme.mode ? require("../assets/person1.png") : require("../assets/lightTheme/light-person1.png"),
+      },
+      {
+        id: "3",
+        description: "Let's make your day great with Taxio right now!",
+        image: theme.mode ? require("../assets/person2.png") : require("../assets/lightTheme/light-person2.png"),
+      },
+    ];
+    
 
     const Footer = () => {
         const moveToNextSlide = () => {
@@ -61,9 +66,9 @@ const Onboarding = ({ navigation }: any) => {
               <View
                 key={index}
                 style={[
-                  tw`h-[2.5px] w-[10px] bg-gray-500 mx-[3px] rounded-[2px]
+                  tw`h-[2.5px] w-[10px] bg-[${theme.text}] mx-[3px] rounded-[2px]
                      `,
-                  currentSlide == index && tw`bg-white w-[25px] `,
+                  currentSlide == index && tw`bg-[${theme.yellow}] w-[25px] `,
                 ]}
               />
             ))}
@@ -84,7 +89,7 @@ const Onboarding = ({ navigation }: any) => {
 
 
   return (
-    <SafeAreaView style={tw`flex-1 bg-[#181A20]`}>
+    <SafeAreaView style={tw`flex-1 bg-[${theme.base}]`}>
       {/* flatlist to display Slide componet  */}
       <FlatList
       ref={ref}

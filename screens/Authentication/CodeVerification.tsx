@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
 import {
   View,
   Text,
@@ -11,8 +11,10 @@ import {
 import tw from "twrnc";
 import BackHeader from "../../components/BackHeader";
 import Button from "../../components/Button";
+import themeContext from "../../components/config/themeContext";
 import ModalPoup from "../../components/ModalPopup";
 import { CONFIRM_USER } from "../../mutations/confirmUserMutation";
+import { Theme } from "../../types";
 
 const CodeVerification = ({route, navigation}: any) => {
   const firstInput: any = useRef();
@@ -21,6 +23,8 @@ const CodeVerification = ({route, navigation}: any) => {
   const fourthInput: any = useRef();
 
   const [otp, setOtp] = useState({ 1: "", 2: "", 3: "", 4: "" });
+
+  const theme: Theme = useContext(themeContext)
 
   const { email } = route.params
   const [Email, setEmail] = useState(email)
@@ -52,7 +56,7 @@ const CodeVerification = ({route, navigation}: any) => {
 
   return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView style={tw`flex-1 bg-[#181A20]`}>
+      <SafeAreaView style={tw`flex-1 bg-[${theme.base}]`}>
 
       <ModalPoup
             onPress={() => {
@@ -68,8 +72,8 @@ const CodeVerification = ({route, navigation}: any) => {
 
         <View style={tw`h-[60%] justify-between`}>
         <BackHeader title="Enter Verification Code" />
-        <Text style={tw`text-white text-center text-[1.1rem]`}>
-          Enter the verification code we just sent to <Text style={tw`text-[#FEBB1B]`}>{Email}</Text>
+        <Text style={tw`text-[${theme.text}] text-center text-[1.1rem]`}>
+          Enter the verification code we just sent to <Text style={tw`text-[${theme.yellow}]`}>{Email}</Text>
         </Text>
 
         <View
@@ -81,7 +85,7 @@ const CodeVerification = ({route, navigation}: any) => {
               ref={firstInput}
               keyboardType="number-pad"
               maxLength={1}
-              style={tw`text-[25px] text-white p-0 text-center px-[20px] py-[10p]`}
+              style={tw`text-[25px] text-[${theme.text}] p-0 text-center px-[20px] py-[10p]`}
               onChangeText={(text) => {
                 setOtp({ ...otp, 1: text });
                 text && secondInput.current.focus();
@@ -95,7 +99,7 @@ const CodeVerification = ({route, navigation}: any) => {
               ref={secondInput}
               keyboardType="number-pad"
               maxLength={1}
-              style={tw`text-[25px] text-white p-0 text-center px-[20px] py-[10p]`}
+              style={tw`text-[25px] text-[${theme.text}] p-0 text-center px-[20px] py-[10p]`}
               onChangeText={(text) => {
                 setOtp({ ...otp, 2: text });
                 text ? thirdInput.current.focus() : firstInput.current.focus();
@@ -109,7 +113,7 @@ const CodeVerification = ({route, navigation}: any) => {
               ref={thirdInput}
               keyboardType="number-pad"
               maxLength={1}
-              style={tw`text-[25px] text-white p-0 text-center px-[20px] py-[10p]`}
+              style={tw`text-[25px] text-[${theme.text}] p-0 text-center px-[20px] py-[10p]`}
               onChangeText={(text) => {
                 setOtp({ ...otp, 3: text });
                 text
@@ -125,7 +129,7 @@ const CodeVerification = ({route, navigation}: any) => {
               ref={fourthInput}
               keyboardType="number-pad"
               maxLength={1}
-              style={tw`text-[25px] text-white p-0 text-center px-[20px] py-[10p]`}
+              style={tw`text-[25px] text-[${theme.text}] p-0 text-center px-[20px] py-[10p]`}
               onChangeText={(text) => {
                 setOtp({ ...otp, 4: text });
                 !text && thirdInput.current.focus();

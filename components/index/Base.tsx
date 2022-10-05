@@ -14,6 +14,13 @@ import ForgotPassword from "../../screens/Authentication/fogotPassword/ForgotPas
 import VerifyEmail from "../../screens/Authentication/fogotPassword/VerifyEmail";
 import ChangePassword from "../../screens/Authentication/fogotPassword/ChangePassword";
 import Home from "../../screens/Home";
+import { EventRegister } from "react-native-event-listeners";
+import themeContext from "../config/themeContext";
+import theme from "../config/colors";
+import SearchLocation from "../../screens/Home/subScreens/SearchLocation";
+import BottomSheetComponent from "../BottomSheet";
+
+
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +28,19 @@ const Base: any = () => {
   const [isAppFirstLaunched, setIsAppFirstLaunched] = useState<Boolean | null>(
     null
   );
+
+  const [mode, setMode] = useState(false)
+
+  useEffect(() => {
+    let eventListener: any = EventRegister.addEventListener('switchTheme', (data) => {
+      setMode(data)      
+    })
+
+    return () => {
+      EventRegister.removeEventListener(eventListener)
+    }
+  }, [])
+  
 
   const check = async () => {
     const appData = await AsyncStorage.getItem("isAppFirstLaunched");
@@ -40,6 +60,7 @@ const Base: any = () => {
 
   return (
     isAppFirstLaunched != null && (
+      <themeContext.Provider value={mode === true ? theme.dark : theme.light} >
       <NavigationContainer>
         <Stack.Navigator>
           {isAppFirstLaunched && (
@@ -99,11 +120,17 @@ const Base: any = () => {
          }
           <Stack.Screen
             options={{ headerShown: false }}
-            name="Home"
+            name="BaseHome"
             component={Home}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="SearchLocation"
+            component={SearchLocation}
           />
         </Stack.Navigator>
       </NavigationContainer>
+      </themeContext.Provider>
     )
   );
 };
