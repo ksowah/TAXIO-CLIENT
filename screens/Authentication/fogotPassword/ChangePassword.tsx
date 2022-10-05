@@ -10,7 +10,7 @@ import {
   import tw from "twrnc";
   import { Input } from "@rneui/themed";
   import { MaterialIcons } from "@expo/vector-icons";
-  import { useRef, useState } from "react";
+  import { useRef, useState, useContext } from "react";
   import { useMutation } from "@apollo/client";
   import BackHeader from "../../../components/BackHeader";
   import Button from "../../../components/Button";
@@ -18,6 +18,8 @@ import {
   import { FORGOT_PASSWORD } from "../../../mutations/forgotPasswordMutation";
 import { CHANGE_PASSWORD } from "../../../mutations/changePasswordMutation";
 import ModalPoup from "../../../components/ModalPopup";
+import { Theme } from "../../../types";
+import themeContext from "../../../components/config/themeContext";
   
   const ForgotPassword = ({ route, navigation }: any) => {
     const inputRef = useRef(null);
@@ -26,11 +28,10 @@ import ModalPoup from "../../../components/ModalPopup";
     const [password2, setPassword2] = useState("");
     const [showModal, setShowModal] = useState(false)
 
+    const theme: Theme = useContext(themeContext)
+
     const { verificationCode } = route.params; 
 
-    console.log("verificationCode >>>",verificationCode);
-    
-  
     const [changePassword, { loading }] = useMutation(CHANGE_PASSWORD, {
       variables: { data: {password, code: verificationCode} },
     });
@@ -58,7 +59,7 @@ import ModalPoup from "../../../components/ModalPopup";
     return (
       <KeyboardAvoidingView behavior="padding" style={tw`flex-1 w-full`}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <SafeAreaView style={tw`flex-1 bg-[#181A20]`}>
+          <SafeAreaView style={tw`flex-1 bg-[${theme.base}]`}>
             <BackHeader title="Create New Password" navigation={navigation} />
 
             <ModalPoup
@@ -73,21 +74,21 @@ import ModalPoup from "../../../components/ModalPopup";
             subTitle={"Your password has been reset successfully!"}
           />
   
-            <View style={tw`flex-1 bg-[#181A20] items-start`}>
+            <View style={tw`flex-1 bg-[${theme.base}] items-start`}>
               <View style={tw`w-full items-center mb-4`}>
-                <Image source={require("../../../assets/change-password.png")} />
+                <Image source={theme.mode ? require("../../../assets/change-password.png") : require("../../../assets/lightTheme/light-change-password.png")} />
               </View>
   
-              <Text style={tw`text-white px-4 text-[16px] mb-6`}>
+              <Text style={tw`text-[${theme.text}] px-4 text-[16px] mb-6`}>
                   Create your new password
               </Text>
   
               <View style={tw`px-1 w-full mb-8 items-center`}>
               <Input
                 containerStyle={tw`w-full`}
-                inputContainerStyle={tw`border-b-0 bg-[#1F222A] h-13 rounded-2xl px-2 text-center`}
+                inputContainerStyle={tw`border-b-0 bg-[${theme.input_base}] h-13 rounded-2xl px-2 text-center`}
                 placeholder={"Password"}
-                inputStyle={tw`text-white`}
+                inputStyle={tw`text-[${theme.text}]`}
                 placeholderTextColor={"#797a7c"}
                 keyboardType="default"
                 textContentType="password"
@@ -103,9 +104,9 @@ import ModalPoup from "../../../components/ModalPopup";
 
               <Input
                 containerStyle={tw`w-full`}
-                inputContainerStyle={tw`border-b-0 bg-[#1F222A] h-13 rounded-2xl px-2 text-center`}
+                inputContainerStyle={tw`border-b-0 bg-[${theme.input_base}] h-13 rounded-2xl px-2 text-center`}
                 placeholder={"Password"}
-                inputStyle={tw`text-white`}
+                inputStyle={tw`text-[${theme.text}]`}
                 placeholderTextColor={"#797a7c"}
                 keyboardType="default"
                 textContentType="password"
