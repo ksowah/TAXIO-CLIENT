@@ -10,24 +10,28 @@ import Profile from './Profile';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { useContext } from "react"
+import themeContext from '../../components/config/themeContext';
+import { Theme } from '../../types';
 
 
-const Tabs = () => {
+const Tabs = ({navigation}: any) => {
 
     const Tab = createBottomTabNavigator();
+
+    const theme: Theme = useContext(themeContext)
 
   return (
     <Tab.Navigator
       screenOptions={{
-        
         headerShown: false,
-        tabBarStyle: tw`bg-[#181a20] border-t-0`,
+        tabBarStyle: tw`bg-[${theme.base}] border-t-0`,
         tabBarActiveTintColor: '#FEBB1B',
       }}
     >
         <Tab.Screen
+        children={() => <Home navigation={navigation} />}
         name="Home"
-        component={Home}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Entypo name="home" size={size} color={color} />
