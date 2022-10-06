@@ -16,6 +16,8 @@ interface Theme {
     map_items: string
     mode: boolean
     fade_yellow: string
+    directions: string
+    input_focus: string
 }
 
 export interface RegisterInput {
