@@ -19,6 +19,8 @@ import themeContext from "../config/themeContext";
 import theme from "../config/colors";
 import SearchLocation from "../../screens/Home/subScreens/SearchLocation";
 import BottomSheetComponent from "../BottomSheet";
+import SelectRide from "../../screens/Home/subScreens/SelectRide";
+import Notifications from "../../screens/Home/subScreens/Notifications";
 
 
 
@@ -127,6 +129,16 @@ const Base: any = () => {
             options={{ headerShown: false }}
             name="SearchLocation"
             component={SearchLocation}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="SelectRide"
+            component={SelectRide}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Notifications"
+            component={Notifications}
           />
         </Stack.Navigator>
       </NavigationContainer>
