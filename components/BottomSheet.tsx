@@ -54,19 +54,9 @@ const BottomSheetComponent = ({ navigation }: any) => {
 
   const travelDistance = useRecoilValue<any>(travelTimeInfo);
 
-  const travelDistanceKM = travelDistance?.distance?.text;
-
   const address = useRecoilValue<any>(addressAtom);
 
-  const addressSlice = address?.split(",")[0];
-
   const [choseNewOrigin, setChoseNewOrigin] = useState(false);
-
-  const originSlice = origin?.description.split(",")[0] 
-  const destinationSlice = destination?.description
-    .split(" ")
-    .slice(0, 2)
-    .join(" ");
 
   // callbacks
   const handleSheetChanges = useCallback((index: number) => {
