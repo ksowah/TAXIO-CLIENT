@@ -96,7 +96,7 @@ const Map = ({navigation}: any) => {
     if(!origin && !address || !destination) return;
     
     let pickUp = origin ?  `${origin.location.lat},${origin.location.lng}` : `${position.latitude},${position.longitude}`
-    let dropOff = `${destination.location.lat}${destination.location.lng}`
+    let dropOff = `${destination.location.lat},${destination.location.lng}`
 
     const getTravelTime = async () => {
 
@@ -105,7 +105,7 @@ const Map = ({navigation}: any) => {
       fetch(URL)
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        console.log("travel time",data);
         
         setTravelTime(data.rows[0].elements[0])
       })
