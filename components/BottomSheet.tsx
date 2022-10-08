@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  useWindowDimensions,
   Animated,
   TouchableWithoutFeedback,
   Keyboard,
@@ -20,18 +19,8 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import themeContext from "./config/themeContext";
 import { Theme } from "../types";
-import { Feather } from "@expo/vector-icons";
 import PickupAutoComplete from "./Home/PickupAutoComplete";
 import DestinationAutocomplete from "./Home/DestinationAutocomplete";
-import { useRecoilValue } from "recoil";
-import {
-  addressAtom,
-  destinationAtom,
-  originAtom,
-  travelTimeInfo,
-} from "./atoms/tripAtom";
-import Button from "./Button";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import DestinationSelectedBottomSheet from "./bottomSheetUtils/DestinationSelectedBottomSheet";
 
 const BottomSheetComponent = ({ navigation }: any) => {
@@ -48,25 +37,7 @@ const BottomSheetComponent = ({ navigation }: any) => {
 
   const theme: Theme = useContext(themeContext);
 
-  const origin = useRecoilValue<any>(originAtom);
-
-  const destination = useRecoilValue<any>(destinationAtom);
-
-  const travelDistance = useRecoilValue<any>(travelTimeInfo);
-
-  const travelDistanceKM = travelDistance?.distance?.text;
-
-  const address = useRecoilValue<any>(addressAtom);
-
-  const addressSlice = address?.split(",")[0];
-
   const [choseNewOrigin, setChoseNewOrigin] = useState(false);
-
-  const originSlice = origin?.description.split(",")[0] 
-  const destinationSlice = destination?.description
-    .split(" ")
-    .slice(0, 2)
-    .join(" ");
 
   // callbacks
   const handleSheetChanges = useCallback((index: number) => {
@@ -77,6 +48,8 @@ const BottomSheetComponent = ({ navigation }: any) => {
   const handleChangeSnapPoint = useCallback(() => {
     ref1.current?.expand();
   }, []);
+
+
 
 
   useEffect(() => {
@@ -92,7 +65,7 @@ const BottomSheetComponent = ({ navigation }: any) => {
       <Map navigation={navigation} />
 
       {isDestinationSelected && (
-        <DestinationSelectedBottomSheet navigation={navigation}/>
+        <DestinationSelectedBottomSheet setIsDestinationSelected={setIsDestinationSelected} navigation={navigation}/>
       )}
 
       <BottomSheet

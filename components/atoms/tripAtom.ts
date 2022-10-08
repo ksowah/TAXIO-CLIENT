@@ -1,6 +1,13 @@
+import { Point } from "react-native-google-places-autocomplete"
 import { atom } from "recoil"
 
-export const originAtom = atom({
+
+interface Origin {
+    location: Point | undefined;
+    description: string;
+}
+
+export const originAtom = atom<Origin | null>({
     key: "originAtom",
     default: null,
 })

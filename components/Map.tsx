@@ -46,13 +46,12 @@ const Map = ({navigation}: any) => {
 
   const destination: any = useRecoilValue(destinationAtom)
 
-  const [travelTime, setTravelTime] = useRecoilState(travelTimeInfo)
+  const [travelTime, setTravelTime] = useRecoilState(travelTimeInfo) 
 
   const mapRef: any = useRef(null)
 
   const [address, setAddress] = useRecoilState<any>(addressAtom)
 
-  
 
   useEffect(() => {
     (async () => {
@@ -93,7 +92,7 @@ const Map = ({navigation}: any) => {
   
   useEffect(() => {
     
-    if(!origin && !address || !destination) return;
+    if(!origin && !position || !destination) return;
     
     let pickUp = origin ?  `${origin.location.lat},${origin.location.lng}` : `${position.latitude},${position.longitude}`
     let dropOff = `${destination.location.lat},${destination.location.lng}`
@@ -105,8 +104,6 @@ const Map = ({navigation}: any) => {
       fetch(URL)
       .then(res => res.json())
       .then(data => {
-        console.log("travel time",data);
-        
         setTravelTime(data.rows[0].elements[0])
       })
     }
@@ -124,14 +121,14 @@ const Map = ({navigation}: any) => {
   return (
     <>
       <MapView
-      ref={mapRef}
+        ref={mapRef}
         style={styles.map}
         initialRegion={position}
         customMapStyle={!switchTheme ? darkThemeMap : undefined}
         provider={ PROVIDER_GOOGLE }
       >
 
-        {origin || address && destination && (
+        {origin || position && destination && (
           <MapViewDirections 
             origin={origin ? {latitude: origin.location.lat, longitude: origin.location.lng} : {latitude: position.latitude, longitude: position.longitude}} 
             destination={{latitude: destination.location.lat, longitude: destination.location.lng}}
@@ -143,8 +140,8 @@ const Map = ({navigation}: any) => {
 
         <Marker
           coordinate={{
-            latitude: origin ? origin.location.lat : position.latitude,
-            longitude: origin ? origin.location.lng : position.longitude,
+            latitude: origin ? origin?.location?.lat : position.latitude,
+            longitude: origin ? origin?.location?.lng : position.longitude,
           }}
           title="Origin"
           description="This is the origin"

@@ -22,7 +22,7 @@ import {
   import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Theme } from "../../types";
 
-const DestinationSelectedBottomSheet = ({navigation}: any) => {
+const DestinationSelectedBottomSheet = ({navigation, setIsDestinationSelected}: any) => {
 
 
     const ref2 = useRef<BottomSheet>(null);
@@ -46,8 +46,8 @@ const DestinationSelectedBottomSheet = ({navigation}: any) => {
   
     const originSlice = origin?.description.split(",")[0] 
     const destinationSlice = destination?.description
-      .split(" ")
-      .slice(0, 2)
+      .split(",")
+      .slice(0, 1)
       .join(" ");
 
   return (
@@ -125,6 +125,7 @@ const DestinationSelectedBottomSheet = ({navigation}: any) => {
               <TouchableOpacity
                 activeOpacity={0.5}
                 style={tw`h-full items-center justify-center`}
+                onPress={() => setIsDestinationSelected(false)}
               >
                 <MaterialCommunityIcons
                   name="lead-pencil"
@@ -150,6 +151,7 @@ const DestinationSelectedBottomSheet = ({navigation}: any) => {
               <TouchableOpacity
                 activeOpacity={0.5}
                 style={tw`h-full items-center justify-center`}
+                onPress={() => setIsDestinationSelected(false)}
               >
                 <MaterialCommunityIcons
                   name="lead-pencil"
