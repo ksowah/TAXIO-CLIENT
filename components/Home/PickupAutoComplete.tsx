@@ -29,9 +29,6 @@ const PickupAutoComplete = () => {
       nearbyPlacesAPI="GooglePlacesSearch"
       debounce={400}
       onPress={(data, details) => {
-        console.log("data >>",data?.description);
-        console.log("details>>", details?.geometry.location);
-        
         setOrigin({
             // set the origin state to the location and description
             location: details?.geometry.location,
