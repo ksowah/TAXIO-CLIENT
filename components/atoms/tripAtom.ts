@@ -22,6 +22,11 @@ export const travelTimeInfo = atom({
     default: null,
 })
 
+export const destinationSelected = atom({
+    key: "destinationSelected",
+    default: false,
+})
+
 export const addressAtom = atom({
     key: "addressAtom",
     default: null,
