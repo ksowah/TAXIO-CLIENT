@@ -17,6 +17,11 @@ const cache = new InMemoryCache({
               return incoming
             }
           },
+          getRideHistory: {
+            merge(existing, incoming){
+              return incoming
+            }
+          },
         }
       }
     }
@@ -46,7 +51,6 @@ export const client = new ApolloClient({
     link: authLink.concat(httpLink),
     credentials: "include",
     cache,
-    
   })
 
 
