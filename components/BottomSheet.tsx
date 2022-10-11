@@ -22,6 +22,8 @@ import { Theme } from "../types";
 import PickupAutoComplete from "./Home/PickupAutoComplete";
 import DestinationAutocomplete from "./Home/DestinationAutocomplete";
 import DestinationSelectedBottomSheet from "./bottomSheetUtils/DestinationSelectedBottomSheet";
+import { destinationSelected } from "./atoms/tripAtom";
+import { useRecoilState } from "recoil";
 
 const BottomSheetComponent = ({ navigation }: any) => {
   // implement bottom sheet
@@ -31,7 +33,7 @@ const BottomSheetComponent = ({ navigation }: any) => {
   const snapPoints2 = useMemo(() => ["45%", "85%"], []);
   const [sheetSnapPoint, setsheetSnapPoint] = useState<any>(0);
   const [isDestinationSelected, setIsDestinationSelected] =
-    useState<any>(false);
+    useRecoilState<any>(destinationSelected);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
 

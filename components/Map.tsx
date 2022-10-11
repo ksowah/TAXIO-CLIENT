@@ -128,9 +128,19 @@ const Map = ({navigation}: any) => {
         provider={ PROVIDER_GOOGLE }
       >
 
-        {origin || position && destination && (
+        {origin && destination && (
           <MapViewDirections 
-            origin={origin ? {latitude: origin.location.lat, longitude: origin.location.lng} : {latitude: position.latitude, longitude: position.longitude}} 
+            origin={{latitude: origin.location.lat, longitude: origin.location.lng} } 
+            destination={{latitude: destination.location.lat, longitude: destination.location.lng}}
+            apikey={GOOGLE_MAPS_API_KEY}
+            strokeWidth={5}
+            strokeColor={theme.directions}
+          />
+        )}
+
+        {!origin && destination && (
+          <MapViewDirections 
+            origin={{latitude: position.latitude, longitude: position.longitude}} 
             destination={{latitude: destination.location.lat, longitude: destination.location.lng}}
             apikey={GOOGLE_MAPS_API_KEY}
             strokeWidth={5}

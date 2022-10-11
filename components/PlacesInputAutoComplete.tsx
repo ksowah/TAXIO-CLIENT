@@ -6,16 +6,19 @@ import themeContext from "./config/themeContext";
 import { Theme } from "../types";
 import { useContext, useEffect, useRef } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { useRecoilState } from "recoil";
+import { destinationAtom, destinationSelected } from "./atoms/tripAtom";
 
 
-interface Props {
-    setIsSelected?: any
-}
-
-const PlacesInputAutoComplete = ({setIsSelected}: Props) => {
+const PlacesInputAutoComplete = ({navigation, setIsSelected}: any) => {
   const theme: Theme = useContext(themeContext);
 
   const ref: any = useRef(null)
+
+  const [destination, setDestination] = useRecoilState<any>(destinationAtom)
+
+  const [isDestinationSelected, setIsDestinationSelected] =
+    useRecoilState<any>(destinationSelected);
 
   useEffect(() => {
     ref.current?.focus()
@@ -28,10 +31,19 @@ const PlacesInputAutoComplete = ({setIsSelected}: Props) => {
       placeholder="Where would you go?"
       nearbyPlacesAPI="GooglePlacesSearch"
       debounce={400}
+      textInputProps={{
+        placeholderTextColor: theme.fade_text,
+      }}
       onPress={(data, details) => {
         console.log("data", data);
         console.log("details", details);
         setIsSelected(true)
+        setIsDestinationSelected(true)
+        setDestination({
+            location: details?.geometry.location,
+            description: data.description
+        })
+        navigation.navigate("Home")
       }}
       styles={{
         textInput: tw`text-[${theme.text}] text-[18px] bg-[${theme.input_base}] px-1 h-13 rounded-2xl px-2`,
@@ -49,6 +61,7 @@ const PlacesInputAutoComplete = ({setIsSelected}: Props) => {
       query={{
         key: GOOGLE_MAPS_API_KEY,
         language: "en",
+        components: "country:gh"
       }}
       keepResultsAfterBlur={true}
       renderRow={(data) => (

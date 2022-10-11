@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 import tw from "twrnc";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { GOOGLE_MAPS_API_KEY } from "@env";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useRef } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Theme } from "../../types";
 import themeContext from "../config/themeContext";
@@ -20,7 +20,7 @@ const DestinationAutocomplete = ({setIsDestinationSelected}: Props) => {
   const ref: any = useRef(null)
 
   const [destination, setDestination] = useRecoilState<any>(destinationAtom)
-
+      
   return (
     <GooglePlacesAutocomplete
         ref={ref}
@@ -30,11 +30,12 @@ const DestinationAutocomplete = ({setIsDestinationSelected}: Props) => {
       }}
       nearbyPlacesAPI="GooglePlacesSearch"
       debounce={400}
-      onPress={(data, details) => {
+      onPress={async (data, details) => {
         setDestination({
             location: details?.geometry.location,
             description: data.description
         })
+      
         setIsDestinationSelected(true)
       }}
       styles={{
