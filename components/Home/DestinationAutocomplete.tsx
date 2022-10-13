@@ -2,12 +2,16 @@ import { View, Text } from "react-native";
 import tw from "twrnc";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { GOOGLE_MAPS_API_KEY } from "@env";
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Theme } from "../../types";
 import themeContext from "../config/themeContext";
 import { destinationAtom } from "../atoms/tripAtom";
 import { useRecoilState } from "recoil";
+import { useQuery } from "@apollo/client";
+import { ME_QUERY } from "../../queries/meQuery";
+import { RIDE_HISTORY_QUERY } from "../../queries/rideHistoryQuery";
+import { AntDesign } from '@expo/vector-icons';
 
 
 interface Props {
@@ -20,6 +24,52 @@ const DestinationAutocomplete = ({setIsDestinationSelected}: Props) => {
   const ref: any = useRef(null)
 
   const [destination, setDestination] = useRecoilState<any>(destinationAtom)
+
+  const [placeText, setPlaceText] = useState("")
+
+  const { data: session } = useQuery(ME_QUERY);
+
+  const { data, loading } = useQuery(RIDE_HISTORY_QUERY, {
+    variables: {
+      user: session?.me?._id,
+    },
+  });
+
+
+
+  const Row = ({data}: any) => {
+
+    if(placeText.length > 0) {
+      return (
+        <View style={tw`flex-1 flex-row items-center`}>
+          <View
+            style={tw`bg-[${theme.fade_yellow}] h-12 w-12 rounded-full items-center justify-center mr-2`}
+          >
+            <View
+              style={tw`bg-[${theme.yellow}] h-8 w-8 rounded-full items-center justify-center`}
+            >
+              <FontAwesome5
+                name="map-marker-alt"
+                size={18}
+                color="#35353f"
+              />
+            </View>
+          </View>
+          <Text style={tw`text-[${theme.text}] font-bold text-[1rem]`}>{data.description}</Text>
+        </View>
+      )
+    }
+
+    return (
+      <View style={tw`flex-1 flex-row items-center`}>
+          <AntDesign name="clockcircleo" size={26 } color={theme.fade_text} />
+          <Text style={tw`text-[${theme.text}] ml-4 font-bold text-[1rem]`}>{data.description}</Text>
+        </View> 
+    )
+  }
+
+
+
       
   return (
     <GooglePlacesAutocomplete
@@ -27,6 +77,7 @@ const DestinationAutocomplete = ({setIsDestinationSelected}: Props) => {
       placeholder="Destination"
       textInputProps={{
         placeholderTextColor: theme.fade_text,
+        onChangeText: (text) => setPlaceText(text),
       }}
       nearbyPlacesAPI="GooglePlacesSearch"
       debounce={400}
@@ -57,25 +108,20 @@ const DestinationAutocomplete = ({setIsDestinationSelected}: Props) => {
         components: "country:gh"
       }}
       keepResultsAfterBlur={true}
-      renderRow={(data) => (
-        
-        <View style={tw`flex-1 flex-row items-center`}>
-          <View
-            style={tw`bg-[${theme.fade_yellow}] h-12 w-12 rounded-full items-center justify-center mr-2`}
-          >
-            <View
-              style={tw`bg-[${theme.yellow}] h-8 w-8 rounded-full items-center justify-center`}
-            >
-              <FontAwesome5
-                name="map-marker-alt"
-                size={18}
-                color="#35353f"
-              />
-            </View>
-          </View>
-          <Text style={tw`text-[${theme.text}] font-bold text-[1rem]`}>{data.description}</Text>
-        </View>
-      )}
+      predefinedPlaces={
+        data?.getRideHistory?.map((item: any) => {
+         return {
+          description: item.description,
+            geometry: {
+              location: {
+                lat: item.lat,
+                lng: item.lng,
+              },
+            },
+         }
+        }) 
+      }
+      renderRow={(data) => (<Row data={data} />)}
      
     />
   );

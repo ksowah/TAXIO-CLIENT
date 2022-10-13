@@ -32,8 +32,6 @@ const PickupAutoComplete = () => {
     },
   });
 
-  console.log(placeText.length);
-  
   const Row = ({data}: any) => {
 
     if(placeText.length > 0) {

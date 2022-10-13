@@ -21,7 +21,7 @@ const PhonePicker = ({setPhoneNumber}: Props) => {
           <PhoneInput
             ref={phoneInput}
             defaultValue={value}
-            defaultCode="GH"
+            defaultCode="US"
             layout="first"
             onChangeText={(text) => {
               setValue(text);
