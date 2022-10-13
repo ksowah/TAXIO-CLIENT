@@ -20,6 +20,8 @@ Taxio is a taxi booking app with many features. Users upon registration can book
 - Tailwind CSS
 - Google Maps API
 - GraphQL (TypeGrapQL) 
-- [GrapQL server Repo](https://github.com/ksowah/TAXIO-SERVER)
+- [GrapQL server Repo](https://github.com/ksowah/TAXIO-SERVER
+
+## VIDEO DEMO
 
 
