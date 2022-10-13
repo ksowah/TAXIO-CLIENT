@@ -1,4 +1,4 @@
-import { useState, useEffect, ReactElement } from "react";
+import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -21,28 +21,31 @@ import SearchLocation from "../../screens/Home/subScreens/SearchLocation";
 import BottomSheetComponent from "../BottomSheet";
 import SelectRide from "../../screens/Home/subScreens/SelectRide";
 import Notifications from "../../screens/Home/subScreens/Notifications";
-
-
+import Promos from "../../screens/Home/subScreens/Promos";
+import Payment from "../../screens/Home/subScreens/Payment";
+import DriverArrival from "../../screens/Home/subScreens/DriverArrival";
 
 const Stack = createNativeStackNavigator();
 
-const Base: any = () => {  
+const Base: any = () => {
   const [isAppFirstLaunched, setIsAppFirstLaunched] = useState<Boolean | null>(
     null
   );
 
-  const [mode, setMode] = useState(false)
+  const [mode, setMode] = useState(false);
 
   useEffect(() => {
-    let eventListener: any = EventRegister.addEventListener('switchTheme', (data) => {
-      setMode(data)      
-    })
+    let eventListener: any = EventRegister.addEventListener(
+      "switchTheme",
+      (data) => {
+        setMode(data);
+      }
+    );
 
     return () => {
-      EventRegister.removeEventListener(eventListener)
-    }
-  }, [])
-  
+      EventRegister.removeEventListener(eventListener);
+    };
+  }, []);
 
   const check = async () => {
     const appData = await AsyncStorage.getItem("isAppFirstLaunched");
@@ -62,86 +65,101 @@ const Base: any = () => {
 
   return (
     isAppFirstLaunched != null && (
-      <themeContext.Provider value={mode === true ? theme.dark : theme.light} >
-      <NavigationContainer>
-        <Stack.Navigator>
-          {isAppFirstLaunched && (
+      <themeContext.Provider value={mode === true ? theme.dark : theme.light}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            {isAppFirstLaunched && (
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="Onboarding"
+                component={Onboarding}
+              />
+            )}
+            {!session?.me && (
+              <>
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Login"
+                  component={Login}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="SignUp"
+                  component={SignUp}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="CodeVerification"
+                  component={CodeVerification}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="PasswordLogin"
+                  component={PasswordLogin}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="ForgotPassword"
+                  component={ForgotPassword}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="VerifyEmail"
+                  component={VerifyEmail}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="ChangePassword"
+                  component={ChangePassword}
+                />
+              </>
+            )}
+
+            {!session?.me.profileUpdated && (
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="UpdateProfile"
+                component={UpdateProfile}
+              />
+            )}
             <Stack.Screen
               options={{ headerShown: false }}
-              name="Onboarding"
-              component={Onboarding}
+              name="DriverArrival"
+              component={DriverArrival}
             />
-          )}
-          {!session?.me && (
-            <>
-              <Stack.Screen
-                options={{ headerShown: false }}
-                name="Login"
-                component={Login}
-              />
-              <Stack.Screen
-                options={{ headerShown: false }}
-                name="SignUp"
-                component={SignUp}
-              />
-              <Stack.Screen
-                options={{ headerShown: false }}
-                name="CodeVerification"
-                component={CodeVerification}
-              />
-              <Stack.Screen
-                options={{ headerShown: false }}
-                name="PasswordLogin"
-                component={PasswordLogin}
-              />
-              <Stack.Screen
-                options={{ headerShown: false }}
-                name="ForgotPassword"
-                component={ForgotPassword}
-              />
-              <Stack.Screen
-                options={{ headerShown: false }}
-                name="VerifyEmail"
-                component={VerifyEmail}
-              />
-              <Stack.Screen
-                options={{ headerShown: false }}
-                name="ChangePassword"
-                component={ChangePassword}
-              />
-            </>
-          )}
-         {
-          !session?.me.profileUpdated && (
             <Stack.Screen
               options={{ headerShown: false }}
-              name="UpdateProfile"
-              component={UpdateProfile}
+              name="BaseHome"
+              component={Home}
             />
-          )
-         }
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="BaseHome"
-            component={Home}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="SearchLocation"
-            component={SearchLocation}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="SelectRide"
-            component={SelectRide}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Notifications"
-            component={Notifications}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="SearchLocation"
+              component={SearchLocation}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="SelectRide"
+              component={SelectRide}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Notifications"
+              component={Notifications}
+            />
+              <Stack.Screen
+              options={{ headerShown: false }}
+              name="Promos"
+              component={Promos}
+            />
+            
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Payment"
+              component={Payment}
+            />             
+          </Stack.Navigator>
+        </NavigationContainer>
       </themeContext.Provider>
     )
   );
