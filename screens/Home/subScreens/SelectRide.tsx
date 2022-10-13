@@ -17,7 +17,7 @@ import { useRecoilValue } from "recoil";
 import { travelTimeInfo } from "../../../components/atoms/tripAtom";
 
 
-const SelectRide = ({navigation}: any) => {
+const SelectRide = ({route, navigation}: any) => {
   const theme: Theme = useContext(themeContext);
 
   const [bike, setBike] = useState(false);
@@ -89,6 +89,15 @@ const SelectRide = ({navigation}: any) => {
     setStandard(false);
   };
 
+  const clearParams = () => {
+    navigation.setParams({
+      promo: undefined,
+    });
+  }
+
+  console.log(route.params);
+  
+
   const travelInfo: any = useRecoilValue(travelTimeInfo);
 
   const travelTime = travelInfo?.duration?.text
@@ -128,6 +137,14 @@ const SelectRide = ({navigation}: any) => {
   let premiumPrice = new Intl.NumberFormat('en-gb', { style: 'currency', currency: 'GBP' }).format((
     travelInfo?.duration.value * SURGE_CHARGE_RATE * 1.75) / 100
     );
+
+
+    const proceedToPayment = () => {
+      navigation.navigate("Payment", {
+        price: priceOfSelectedRide,
+      });
+    }
+
 
   return (
     <KeyboardAvoidingView behavior="padding" style={tw`flex-1`}>
@@ -171,19 +188,33 @@ const SelectRide = ({navigation}: any) => {
         </Text>
 
         <View style={tw`flex-row mt-6 items-center justify-center`}>
-          <Input
-            placeholder="Enter Promo Code"
-            placeholderTextColor={"#797a7c"}
-            containerStyle={tw`flex-1 m-0 p-0`}
-            inputContainerStyle={tw`bg-[${theme.input_base}] border-b-0 h-13 rounded-2xl px-2 text-center`}
-            inputStyle={tw`text-[${theme.text}]`}
-            autoCapitalize="none"
-            keyboardType="default"
-            autoCorrect={false}
-            returnKeyType="next"
-          />
 
-          <TouchableOpacity activeOpacity={.5} style={tw`h-11 w-11 rounded-full mb-6 ml-2 bg-[${theme.input_base}] items-center justify-center`}>
+          {!route.params?.promo ? (
+            <Input
+              placeholder="Enter Promo Code"
+              placeholderTextColor={"#797a7c"}
+              containerStyle={tw`flex-1 m-0 p-0`}
+              inputContainerStyle={tw`bg-[${theme.input_base}] border-b-0 h-13 rounded-2xl px-2 text-center`}
+              inputStyle={tw`text-[${theme.text}]`}
+              autoCapitalize="none"
+              keyboardType="default"
+              autoCorrect={false}
+              returnKeyType="next"
+            />
+          ) : (
+            <View style={tw`h-11 w-[13rem] mb-6 flex-row items-center rounded-full bg-[${theme.yellow}] items-center justify-center`}>
+                <Text style={tw`text-[1.1rem] text-[${theme.base}]`}>
+                    {route?.params?.promo.title}
+                </Text>
+
+                <TouchableOpacity onPress={clearParams} style={tw`items-center justify-center ml-2 border border-[${theme.border}] h-4 w-4 rounded-sm`}>
+                    <FontAwesome5 name="times" size={10} color={theme.base} />
+                </TouchableOpacity>
+            </View>
+          )}
+
+
+          <TouchableOpacity onPress={() => navigation.navigate("Promos")} activeOpacity={.5} style={tw`h-11 w-11 rounded-full mb-6 ml-2 bg-[${theme.input_base}] items-center justify-center`}>
                 <Feather name="plus" size={20} color={theme.text} />
           </TouchableOpacity>
         </View>
@@ -214,7 +245,7 @@ const SelectRide = ({navigation}: any) => {
                 </View>
 
             </View>
-                <Button title="Continue"/>
+                <Button title="Continue" onPress={proceedToPayment}/>
         </View>
 
     </SafeAreaView>
