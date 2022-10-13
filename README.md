@@ -3,7 +3,7 @@
 ## OVERVIEW
 Taxio is a taxi booking app with many features. Users upon registration can book a ride either from their current location or a pre-defined location to a desired destination. Live map view of routes and accurate distance and pricing metrix is implemented.
 
-## FEATURES
+## FEATURES (35% Complete)
 - [x] Taxi Booking with GPS 
 - [ ] Real Time Driver Tracking
 - [x] Taxi Booking Management (History, Completed, Active, & Cancel Booking Features)
@@ -25,5 +25,5 @@ Taxio is a taxi booking app with many features. Users upon registration can book
 - [FIgma Design](https://www.figma.com/file/rjJ1t4eZAg2rqcm1K4at7C/Taxio---Taxi-Booking-App-UI-Kit-(Community)-(Copy)?node-id=0%3A1)
 
 ## VIDEO DEMO
-
+https://user-images.githubusercontent.com/80095257/195697851-b71d9d7e-d4d1-44ee-ba8d-d1af6f767661.mp4
 
