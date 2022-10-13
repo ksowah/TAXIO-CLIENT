@@ -15,4 +15,10 @@ Taxio is a taxi booking app with many features. Users upon registration can book
 - [x] Onboarding, Sign up, Sign in, Forgot & Reset Password, Account Setup, Search. 
 - [ ] Notification, Help Center (FAQ & Contact Support), Profile, Settings, & More.
 
+## TECK STACK & TOOLS
+- React Native (Expo)
+- Tailwind CSS
+- Google Maps API
+- GraphQL (TypeGrapQL) 
 
+[GrapQL server Repo](https://github.com/ksowah/TAXIO-SERVER)
