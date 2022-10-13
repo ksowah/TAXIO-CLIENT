@@ -27,7 +27,7 @@ import DriverArrival from "../../screens/Home/subScreens/DriverArrival";
 
 const Stack = createNativeStackNavigator();
 
-const Base: any = () => {
+const Routes: any = () => {
   const [isAppFirstLaunched, setIsAppFirstLaunched] = useState<Boolean | null>(
     null
   );
@@ -165,4 +165,4 @@ const Base: any = () => {
   );
 };
 
-export default Base;
+export default Routes;
