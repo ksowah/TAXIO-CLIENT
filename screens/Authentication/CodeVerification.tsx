@@ -65,7 +65,7 @@ const CodeVerification = ({route, navigation}: any) => {
             }}
             setShowModal={setShowModal}
             showModal={showModal}
-            image={require("../../assets/profile.png")}
+            image={theme.mode ? require("../../assets/profile.png") : require("../../assets/lightTheme/light-modal.png")}
             title={"Congratulations"}
             subTitle={"Your account is ready to use. You can now proceed to login"}
           />
