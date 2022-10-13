@@ -5,12 +5,14 @@ Taxio is a taxi booking app with many features. Users upon registration can book
 
 ## FEATURES
 - [x] Taxi Booking with GPS 
-- [] Real Time Driver Tracking
+- [ ] Real Time Driver Tracking
 - [x] Taxi Booking Management (History, Completed, Active, & Cancel Booking Features)
-- Fare Taxi Summary, Driver & Vehicle Details, & Review/Rating Features
-- Secure Multiple Payment Methods & Promo/Special Offers Features
-- In-App Messaging/Chatting Features (Chat & Calls Management)
-- E-Wallet (Top Up, Transaction History, & E-Receipt Features)
-- Onboarding, Sign up, Sign in, Forgot & Reset Password, Account Setup, Notification, Search, Help Center (FAQ & Contact Support), Profile, Settings, & More.
+- [x] Ride Summary (Fare, distance). 
+- [ ] Driver & Vehicle Details, & Review/Rating Features
+- [x] Secure Multiple Payment Methods & Promo/Special Offers Features
+- [ ] In-App Messaging/Chatting Features (Chat & Calls Management)
+- [ ] E-Wallet (Top Up, Transaction History, & E-Receipt Features)
+- [x] Onboarding, Sign up, Sign in, Forgot & Reset Password, Account Setup, Search. 
+- [ ] Notification, Help Center (FAQ & Contact Support), Profile, Settings, & More.
 
 
