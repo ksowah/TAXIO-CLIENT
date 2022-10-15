@@ -123,19 +123,19 @@ const SelectRide = ({route, navigation}: any) => {
   
 
   let priceOfSelectedRide = new Intl.NumberFormat('en-gb', { style: 'currency', currency: 'GBP' }).format((
-    travelInfo?.duration.value * SURGE_CHARGE_RATE * multiplier) / 100
+    travelInfo?.duration?.value * SURGE_CHARGE_RATE * multiplier) / 100
     );
 
   let bikePrice = new Intl.NumberFormat('en-gb', { style: 'currency', currency: 'GBP' }).format((
-    travelInfo?.duration.value * SURGE_CHARGE_RATE * 1) / 100
+    travelInfo?.duration?.value * SURGE_CHARGE_RATE * 1) / 100
     );
 
   let standardPrice = new Intl.NumberFormat('en-gb', { style: 'currency', currency: 'GBP' }).format((
-    travelInfo?.duration.value * SURGE_CHARGE_RATE * 1.2) / 100
+    travelInfo?.duration?.value * SURGE_CHARGE_RATE * 1.2) / 100
     );
 
   let premiumPrice = new Intl.NumberFormat('en-gb', { style: 'currency', currency: 'GBP' }).format((
-    travelInfo?.duration.value * SURGE_CHARGE_RATE * 1.75) / 100
+    travelInfo?.duration?.value * SURGE_CHARGE_RATE * 1.75) / 100
     );
 
 
