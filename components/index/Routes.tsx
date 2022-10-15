@@ -124,6 +124,11 @@ const Routes: any = () => {
                 component={UpdateProfile}
               />
             )}
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="DriverArrival"
+              component={DriverArrival}
+            />
 
             <Stack.Screen
               options={{ headerShown: false }}
@@ -156,11 +161,7 @@ const Routes: any = () => {
               name="Payment"
               component={Payment}
             />
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="DriverArrival"
-              component={DriverArrival}
-            />
+            {/* ----------// */}
             <Stack.Screen
               options={{ headerShown: false }}
               name="DriverProfile"
