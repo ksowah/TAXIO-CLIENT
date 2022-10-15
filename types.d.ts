@@ -18,6 +18,7 @@ interface Theme {
     fade_yellow: string
     directions: string
     input_focus: string
+    base_light_shade: string
 }
 
 export interface RegisterInput {
