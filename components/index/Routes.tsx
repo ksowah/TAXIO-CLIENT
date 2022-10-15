@@ -24,6 +24,8 @@ import Notifications from "../../screens/Home/subScreens/Notifications";
 import Promos from "../../screens/Home/subScreens/Promos";
 import Payment from "../../screens/Home/subScreens/Payment";
 import DriverArrival from "../../screens/Home/subScreens/DriverArrival";
+import DriverProfile from "../../screens/driver/DriverProfile";
+import CancelTrip from "../../screens/driver/CancelTrip";
 
 const Stack = createNativeStackNavigator();
 
@@ -122,11 +124,7 @@ const Routes: any = () => {
                 component={UpdateProfile}
               />
             )}
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="DriverArrival"
-              component={DriverArrival}
-            />
+
             <Stack.Screen
               options={{ headerShown: false }}
               name="BaseHome"
@@ -147,17 +145,32 @@ const Routes: any = () => {
               name="Notifications"
               component={Notifications}
             />
-              <Stack.Screen
+            <Stack.Screen
               options={{ headerShown: false }}
               name="Promos"
               component={Promos}
             />
-            
+
             <Stack.Screen
               options={{ headerShown: false }}
               name="Payment"
               component={Payment}
-            />             
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="DriverArrival"
+              component={DriverArrival}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="DriverProfile"
+              component={DriverProfile}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="CancelTrip"
+              component={CancelTrip}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </themeContext.Provider>
