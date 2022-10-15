@@ -124,7 +124,7 @@ const Map = ({navigation}: any) => {
         ref={mapRef}
         style={styles.map}
         initialRegion={position}
-        customMapStyle={!switchTheme ? darkThemeMap : undefined}
+        customMapStyle={theme.mode && darkThemeMap || []}
         provider={ PROVIDER_GOOGLE }
       >
 

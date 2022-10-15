@@ -181,7 +181,7 @@ const Payment = ({route, navigation }: any) => {
       <View
         style={tw` h-[8rem] w-full border-t bg-[${theme.base}] border-[${theme.border}] absolute bottom-0 items-center justify-center`}
       >
-        <Button title="Continue" />
+        <Button title="Continue" onPress={() => navigation.navigate("DriverArrival")}/>
       </View>
     </SafeAreaView>
   );
