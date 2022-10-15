@@ -18,6 +18,7 @@ import {
   originAtom,
 } from "../../../components/atoms/tripAtom";
 import ModalPoup from "../../../components/ModalPopup";
+import StarRatings from "../../../components/bottomSheetUtils/StarRatings";
 
 const DriverArrival = ({ navigation }: any) => {
   const theme: Theme = useContext(themeContext);
@@ -26,6 +27,7 @@ const DriverArrival = ({ navigation }: any) => {
   const snapPoints = useMemo(() => ["40%", "65%"], []);
 
   const [tripStart, setTripStart] = useState<boolean | any>(false);
+  const [tripEnd, setTripEnd] = useState<boolean | any>(true);
 
   const origin = useRecoilValue<any>(originAtom);
   const destination = useRecoilValue<any>(destinationAtom);
@@ -36,12 +38,15 @@ const DriverArrival = ({ navigation }: any) => {
   const address = useRecoilValue<any>(addressAtom);
   const addressSlice = address?.split(",")[0];
 
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
       setTripStart(true);
       ref.current?.expand();
+      // setTimeout(() => {
+      //   setShowModal(true);
+      // }, 3000);
     }, 5000);
   }, [tripStart]);
 
@@ -53,7 +58,7 @@ const DriverArrival = ({ navigation }: any) => {
         }}
         setShowModal={setShowModal}
         showModal={showModal}
-        image={require("../../../assets/trip-marker.png")}
+        image={theme.mode ? require("../../../assets/trip-marker.png") : require("../../../assets/trip-marker-light.png")}
         title={"You have arrived at your destination!"}
         subTitle={
           "See you on the next trip : )"
@@ -129,6 +134,9 @@ const DriverArrival = ({ navigation }: any) => {
             </TouchableOpacity>
 
             {tripStart && (
+              tripEnd ? (
+                <StarRatings />
+              ) : (
               <View
                 style={tw`py-6 flex-row border-b mb-4 border-[${theme.border}]`}
               >
@@ -194,7 +202,10 @@ const DriverArrival = ({ navigation }: any) => {
                   </View>
                 </View>
               </View>
+
+              )
             )}
+            
 
             <View style={tw`flex-row items-center mt-6`}>
               {!tripStart && (
