@@ -10,10 +10,11 @@ const theme = {
     map_items: "#ffe4a4",
     directions: "#ffc232",
     input_focus: "#fffaed",
+    base_light_shade: "#fbfbfb",
     mode: false
   },
   dark: {
-    base: "#181a20",
+    base: "#1f222a",
     text: "#fff",
     border: "#35383f",
     input_base: "#35383f",
@@ -23,6 +24,7 @@ const theme = {
     fade_yellow: "#524322",
     directions: "#fec02b",
     input_focus: "#2a271f",
+    base_light_shade: "#1f222a",
     mode: true
   },
 };
