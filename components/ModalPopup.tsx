@@ -20,9 +20,11 @@ interface Props {
     image: any;
     showModal: boolean;
     setShowModal: any;
+    padding?: any;
+    title_color?: any;
 }
 
-const ModalPoup = ({title, subTitle, onPress, image, showModal, setShowModal}: Props) => {
+const ModalPoup = ({title, title_color, subTitle, onPress, image, showModal, setShowModal, padding}: Props) => {
 
   const theme: Theme = useContext(themeContext) 
 
@@ -54,12 +56,12 @@ const ModalPoup = ({title, subTitle, onPress, image, showModal, setShowModal}: P
         <Animated.View
           style={[styles.modalContainer, {transform: [{scale: scaleValue}]}, tw`bg-[${theme.base}]`]}>
 
-            <View style={tw`items-center overflow-hidden justify-between pb-5`}>
+            <View style={tw`items-center overflow-hidden justify-between ${padding} pb-5`}>
                 <Image 
                     source={image}
                 />
 
-                <Text style={tw`text-[1.4rem] font-bold text-center text-[${theme.text}]`}>
+                <Text style={tw`text-[1.4rem] font-bold text-center text-[${theme.text}] ${title_color}`}>
                     {title}
                 </Text>
 
