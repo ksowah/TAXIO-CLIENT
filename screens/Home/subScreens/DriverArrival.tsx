@@ -27,7 +27,7 @@ const DriverArrival = ({ navigation }: any) => {
   const snapPoints = useMemo(() => ["40%", "65%"], []);
 
   const [tripStart, setTripStart] = useState<boolean | any>(false);
-  const [tripEnd, setTripEnd] = useState<boolean | any>(true);
+  const [tripEnd, setTripEnd] = useState<boolean | any>(false);
 
   const origin = useRecoilValue<any>(originAtom);
   const destination = useRecoilValue<any>(destinationAtom);
@@ -44,16 +44,18 @@ const DriverArrival = ({ navigation }: any) => {
     setTimeout(() => {
       setTripStart(true);
       ref.current?.expand();
-      // setTimeout(() => {
-      //   setShowModal(true);
-      // }, 3000);
+      setTimeout(() => {
+        setShowModal(true);
+      }, 3000);
     }, 5000);
-  }, [tripStart]);
+  }, []);
 
   return (
     <View style={tw`flex-1 bg-[${theme.base}]`}>
       <ModalPoup
         onPress={() => {
+          setTripStart(false);
+          setTripEnd(true)
           setShowModal(false);
         }}
         setShowModal={setShowModal}
@@ -78,13 +80,13 @@ const DriverArrival = ({ navigation }: any) => {
         <BottomSheetView style={tw`h-full bg-[${theme.base}]`}>
           <View style={tw`px-3 items-center `}>
             <View
-              style={tw`py-2 w-full pb-6 border-b shadow-2xl flex-row items-center justify-between border-[${theme.border}]`}
+              style={tw`py-2 w-full pb-6 border-b shadow-2xl flex-row items-center justify-between ${tripEnd && "justify-center"} border-[${theme.border}]`}
             >
               <Text style={tw`text-[${theme.text}] font-bold text-2xl`}>
                 {tripStart ? "Trip to Destination" : tripEnd ? "Rate Driver" : "Driver is Arriving..."}
               </Text>
 
-              <Text style={tw`text-[${theme.text}] text-[1rem]`}>2mins</Text>
+              <Text style={tw`text-[${theme.text}] text-[1rem] ${tripEnd && "hidden"}`}>2mins</Text>
             </View>
 
             <TouchableOpacity
