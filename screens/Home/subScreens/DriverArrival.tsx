@@ -81,7 +81,7 @@ const DriverArrival = ({ navigation }: any) => {
               style={tw`py-2 w-full pb-6 border-b shadow-2xl flex-row items-center justify-between border-[${theme.border}]`}
             >
               <Text style={tw`text-[${theme.text}] font-bold text-2xl`}>
-                {tripStart ? "Trip to Destination" : "Driver is Arriving..."}
+                {tripStart ? "Trip to Destination" : tripEnd ? "Rate Driver" : "Driver is Arriving..."}
               </Text>
 
               <Text style={tw`text-[${theme.text}] text-[1rem]`}>2mins</Text>
