@@ -11,10 +11,11 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Foundation } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   addressAtom,
   destinationAtom,
+  destinationSelected,
   originAtom,
 } from "../../../components/atoms/tripAtom";
 import ModalPoup from "../../../components/ModalPopup";
@@ -29,8 +30,9 @@ const DriverArrival = ({ navigation }: any) => {
   const [tripStart, setTripStart] = useState<boolean | any>(false);
   const [tripEnd, setTripEnd] = useState<boolean | any>(false);
 
-  const origin = useRecoilValue<any>(originAtom);
-  const destination = useRecoilValue<any>(destinationAtom);
+ 
+  const [origin, setOrigin] = useRecoilState<any>(originAtom);
+  const [destination, setDestination] = useRecoilState<any>(destinationAtom);
 
   const originSlice = origin?.description.split(",")[0];
   const destinationSlice = destination?.description;
@@ -40,21 +42,37 @@ const DriverArrival = ({ navigation }: any) => {
 
   const [showModal, setShowModal] = useState(false);
 
+  const [isDestinationSelected, setIsDestinationSelected] =
+    useRecoilState<any>(destinationSelected);
+
+
   useEffect(() => {
     setTimeout(() => {
       setTripStart(true);
       ref.current?.expand();
-      setTimeout(() => {
-        setShowModal(true);
-      }, 3000);
     }, 5000);
+
   }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowModal(true);
+    }, 8000);
+  }, [])
+
+  const completeRating = () => {
+    setIsDestinationSelected(false)
+    setOrigin(null)
+    setDestination(null)
+    navigation.replace("BaseHome")
+  }
+  
 
   return (
     <View style={tw`flex-1 bg-[${theme.base}]`}>
       <ModalPoup
-        onPress={() => {
-          setTripStart(false);
+        onPress={() => {          
+          setTripStart(false)
           setTripEnd(true)
           setShowModal(false);
         }}
@@ -135,8 +153,8 @@ const DriverArrival = ({ navigation }: any) => {
               </View>
             </TouchableOpacity>
 
-            {tripStart && (
-              tripEnd ? (
+            {/* {tripStart && ( */}
+              {tripEnd ? (
                 <StarRatings />
               ) : (
               <View
@@ -206,37 +224,58 @@ const DriverArrival = ({ navigation }: any) => {
               </View>
 
               )
-            )}
+            }
             
 
             <View style={tw`flex-row items-center mt-6`}>
-              {!tripStart && (
+
+              {tripEnd ? (
+                <View style={tw`flex-row items-center`}>
+                    <TouchableOpacity onPress={completeRating} activeOpacity={.5} style={tw`w-[9rem] bg-[${theme.input_base}] items-center justify-center rounded-3xl mx-6 h-[3.1rem]`}>
+                      <Text style={tw`text-lg font-bold text-center text-[${theme.text}]`}>
+                          Cancel
+                      </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={completeRating} activeOpacity={.5} style={tw`w-[9rem] bg-[#FEBB1B] items-center justify-center shadow-[#FEBB1B] shadow-2xl rounded-3xl mx-6 h-[3.1rem]`}>
+                      <Text style={tw`text-lg font-bold text-center`}>
+                          Submit
+                      </Text>
+                    </TouchableOpacity>
+                    
+                </View>
+              ) : (
+                <>
+                {!tripStart && (
+                  <TouchableOpacity
+                    activeOpacity={0.5}
+                    style={tw`h-18 w-18 bg-[#ffe4a4] mr-4 rounded-full items-center justify-center`}
+                    onPress={() => navigation.navigate("CancelTrip")}
+                  >
+                    <FontAwesome5 name="times" size={26} color="#181a20" />
+                  </TouchableOpacity>
+                )}
+  
                 <TouchableOpacity
                   activeOpacity={0.5}
-                  style={tw`h-18 w-18 bg-[#ffe4a4] mr-4 rounded-full items-center justify-center`}
-                  onPress={() => navigation.navigate("CancelTrip")}
+                  style={tw`h-18 w-18 bg-[${theme.yellow}] mr-4 rounded-full items-center justify-center`}
                 >
-                  <FontAwesome5 name="times" size={26} color="#181a20" />
+                  <Ionicons
+                    name="chatbubble-ellipses-sharp"
+                    size={26}
+                    color="#181a20"
+                  />
                 </TouchableOpacity>
+  
+                <TouchableOpacity
+                  activeOpacity={0.5}
+                  style={tw`h-18 w-18 bg-[${theme.yellow}] rounded-full items-center justify-center`}
+                >
+                  <FontAwesome name="phone" size={26} color="#181a20" />
+                </TouchableOpacity>
+                </>
               )}
-
-              <TouchableOpacity
-                activeOpacity={0.5}
-                style={tw`h-18 w-18 bg-[${theme.yellow}] mr-4 rounded-full items-center justify-center`}
-              >
-                <Ionicons
-                  name="chatbubble-ellipses-sharp"
-                  size={26}
-                  color="#181a20"
-                />
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                activeOpacity={0.5}
-                style={tw`h-18 w-18 bg-[${theme.yellow}] rounded-full items-center justify-center`}
-              >
-                <FontAwesome name="phone" size={26} color="#181a20" />
-              </TouchableOpacity>
+             
             </View>
           </View>
         </BottomSheetView>

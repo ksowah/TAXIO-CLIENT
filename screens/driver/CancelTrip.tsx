@@ -17,12 +17,22 @@ const CancelTrip = ({ navigation }: any) => {
   const theme: Theme = useContext(themeContext);
 
   const [showModal, setShowModal] = useState(false)
+  const [check1, setCheck1] = useState(false)
+  const [check2, setCheck2] = useState(false)
+  const [check3, setCheck3] = useState(false)
+  const [check4, setCheck4] = useState(false)
+  const [check5, setCheck5] = useState(false)
+  const [check6, setCheck6] = useState(false)
 
   const [isDestinationSelected, setIsDestinationSelected] =
     useRecoilState<any>(destinationSelected);
 
   const [origin, setOrigin] = useRecoilState<any>(originAtom);
   const [destination, setDestination] = useRecoilState<any>(destinationAtom);
+
+  const handleCheck = (setCheck: any, check: boolean) => {
+    setCheck(!check)
+  }
 
   return (
     <SafeAreaView style={tw`flex-1 bg-[${theme.base}]`}>
@@ -52,14 +62,14 @@ const CancelTrip = ({ navigation }: any) => {
       <View>
         <View style={tw`flex-row items-center mb-4 px-2`}>
           <CheckBox
-            checked={true}
+            checked={check1}
             checkedIcon={
-              <FontAwesome name="check-square" size={24} color={theme.yellow} />
+              <FontAwesome name="check-square" size={26} color={theme.yellow} />
             }
             uncheckedIcon={
               <Feather name="square" size={24} color={theme.yellow} />
             }
-            // onPress={onPress}
+            onPress={() => handleCheck(setCheck1, check1)}
             containerStyle={tw`p-0 bg-[${theme.base}]`}
           />
           <Text style={tw`text-[${theme.text}] font-bold text-[.9rem]`}>
@@ -70,14 +80,14 @@ const CancelTrip = ({ navigation }: any) => {
 
         <View style={tw`flex-row items-center mb-4 px-2`}>
           <CheckBox
-            checked={true}
+            checked={check2}
             checkedIcon={
-              <FontAwesome name="check-square" size={24} color={theme.yellow} />
+              <FontAwesome name="check-square" size={26} color={theme.yellow} />
             }
             uncheckedIcon={
               <Feather name="square" size={24} color={theme.yellow} />
             }
-            // onPress={onPress}
+            onPress={() => handleCheck(setCheck2, check2)}
             containerStyle={tw`p-0 bg-[${theme.base}]`}
           />
           <Text style={tw`text-[${theme.text}] font-bold text-[.9rem]`}>
@@ -88,14 +98,14 @@ const CancelTrip = ({ navigation }: any) => {
 
         <View style={tw`flex-row items-center mb-4 px-2`}>
           <CheckBox
-            checked={true}
+            checked={check3}
             checkedIcon={
-              <FontAwesome name="check-square" size={24} color={theme.yellow} />
+              <FontAwesome name="check-square" size={26} color={theme.yellow} />
             }
             uncheckedIcon={
               <Feather name="square" size={24} color={theme.yellow} />
             }
-            // onPress={onPress}
+            onPress={() => handleCheck(setCheck3, check3)}
             containerStyle={tw`p-0 bg-[${theme.base}]`}
           />
           <Text style={tw`text-[${theme.text}] font-bold text-[.9rem]`}>
@@ -105,14 +115,14 @@ const CancelTrip = ({ navigation }: any) => {
 
         <View style={tw`flex-row items-center mb-4 px-2`}>
           <CheckBox
-            checked={true}
+            checked={check4}
             checkedIcon={
-              <FontAwesome name="check-square" size={24} color={theme.yellow} />
+              <FontAwesome name="check-square" size={26} color={theme.yellow} />
             }
             uncheckedIcon={
               <Feather name="square" size={24} color={theme.yellow} />
             }
-            // onPress={onPress}
+            onPress={() => handleCheck(setCheck4, check4)}
             containerStyle={tw`p-0 bg-[${theme.base}]`}
           />
           <Text style={tw`text-[${theme.text}] font-bold text-[.9rem]`}>
@@ -123,14 +133,14 @@ const CancelTrip = ({ navigation }: any) => {
 
         <View style={tw`flex-row items-center mb-4 px-2`}>
           <CheckBox
-            checked={true}
+            checked={check5}
             checkedIcon={
-              <FontAwesome name="check-square" size={24} color={theme.yellow} />
+              <FontAwesome name="check-square" size={26} color={theme.yellow} />
             }
             uncheckedIcon={
               <Feather name="square" size={24} color={theme.yellow} />
             }
-            // onPress={onPress}
+            onPress={() => handleCheck(setCheck5, check5)}
             containerStyle={tw`p-0 bg-[${theme.base}]`}
           />
           <Text style={tw`text-[${theme.text}] font-bold text-[.9rem]`}>
@@ -141,14 +151,14 @@ const CancelTrip = ({ navigation }: any) => {
 
         <View style={tw`flex-row items-center mb-4 px-2`}>
           <CheckBox
-            checked={true}
+            checked={check6}
             checkedIcon={
-              <FontAwesome name="check-square" size={24} color={theme.yellow} />
+              <FontAwesome name="check-square" size={26} color={theme.yellow} />
             }
             uncheckedIcon={
               <Feather name="square" size={24} color={theme.yellow} />
             }
-            // onPress={onPress}
+            onPress={() => handleCheck(setCheck6, check6)}
             containerStyle={tw`p-0 bg-[${theme.base}]`}
           />
           <Text style={tw`text-[${theme.text}] font-bold text-[.9rem]`}>
