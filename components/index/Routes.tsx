@@ -18,7 +18,6 @@ import { EventRegister } from "react-native-event-listeners";
 import themeContext from "../config/themeContext";
 import theme from "../config/colors";
 import SearchLocation from "../../screens/Home/subScreens/SearchLocation";
-import BottomSheetComponent from "../BottomSheet";
 import SelectRide from "../../screens/Home/subScreens/SelectRide";
 import Notifications from "../../screens/Home/subScreens/Notifications";
 import Promos from "../../screens/Home/subScreens/Promos";
@@ -67,7 +66,7 @@ const Routes: any = () => {
 
   return (
     isAppFirstLaunched != null && (
-      <themeContext.Provider value={mode === true ? theme.dark : theme.light}>
+      <themeContext.Provider value={mode === false ? theme.dark : theme.light}>
         <NavigationContainer>
           <Stack.Navigator>
             {isAppFirstLaunched && (
@@ -126,12 +125,6 @@ const Routes: any = () => {
             )}
             <Stack.Screen
               options={{ headerShown: false }}
-              name="DriverArrival"
-              component={DriverArrival}
-            />
-
-            <Stack.Screen
-              options={{ headerShown: false }}
               name="BaseHome"
               component={Home}
             />
@@ -164,6 +157,11 @@ const Routes: any = () => {
             {/* ----------// */}
             <Stack.Screen
               options={{ headerShown: false }}
+              name="DriverArrival"
+              component={DriverArrival}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
               name="DriverProfile"
               component={DriverProfile}
             />
@@ -171,7 +169,7 @@ const Routes: any = () => {
               options={{ headerShown: false }}
               name="CancelTrip"
               component={CancelTrip}
-            />
+            />            
           </Stack.Navigator>
         </NavigationContainer>
       </themeContext.Provider>
