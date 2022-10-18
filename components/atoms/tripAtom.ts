@@ -32,4 +32,9 @@ export const addressAtom = atom({
     default: null,
 })
 
+export const priceAtom = atom({
+    key: "priceAtom",
+    default: null,
+})
+
 
