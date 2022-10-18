@@ -10,16 +10,21 @@ import { Avatar } from "@rneui/base";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Foundation } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   addressAtom,
   destinationAtom,
   destinationSelected,
   originAtom,
+  priceAtom,
+  travelTimeInfo,
 } from "../../../components/atoms/tripAtom";
 import ModalPoup from "../../../components/ModalPopup";
 import StarRatings from "../../../components/bottomSheetUtils/StarRatings";
+import MarkerTarget from "../../../components/bottomSheetUtils/MarkerTarget";
+import { useMutation, useQuery } from "@apollo/client";
+import { BOOKINGS_MUTATION } from "../../../mutations/bookingsMutation";
+import { ME_QUERY } from "../../../queries/meQuery";
 
 const DriverArrival = ({ navigation }: any) => {
   const theme: Theme = useContext(themeContext);
@@ -30,7 +35,7 @@ const DriverArrival = ({ navigation }: any) => {
   const [tripStart, setTripStart] = useState<boolean | any>(false);
   const [tripEnd, setTripEnd] = useState<boolean | any>(false);
 
- 
+
   const [origin, setOrigin] = useRecoilState<any>(originAtom);
   const [destination, setDestination] = useRecoilState<any>(destinationAtom);
 
@@ -44,6 +49,32 @@ const DriverArrival = ({ navigation }: any) => {
 
   const [isDestinationSelected, setIsDestinationSelected] =
     useRecoilState<any>(destinationSelected);
+
+  const price = useRecoilValue(priceAtom)
+  const distanceAndTime: any = useRecoilValue(travelTimeInfo)
+
+  // format todays date and time in months, days, years, hours, minutes and seconds
+  const date = new Date().toLocaleString('en-US', { month: '2-digit', 
+  day: 'numeric', 
+  year: 'numeric', 
+  hour: 'numeric', 
+  minute: 'numeric', 
+  second: 'numeric', 
+  hour12: true })
+
+  // get me query
+  const { data: session } = useQuery(ME_QUERY);
+
+  const [addToBookings, { loading }] = useMutation(BOOKINGS_MUTATION, {
+    variables: { data: { origin: originSlice,
+       destination: destinationSlice,
+        distance: distanceAndTime.distance.text,
+        time: distanceAndTime.duration.text,
+        price, 
+        date,
+        user: session?.me._id,
+      } },
+  });
 
 
   useEffect(() => {
@@ -66,14 +97,16 @@ const DriverArrival = ({ navigation }: any) => {
     setDestination(null)
     navigation.replace("BaseHome")
   }
-  
+
+
 
   return (
     <View style={tw`flex-1 bg-[${theme.base}]`}>
       <ModalPoup
-        onPress={() => {          
+        onPress={() => {
           setTripStart(false)
           setTripEnd(true)
+          addToBookings()
           setShowModal(false);
         }}
         setShowModal={setShowModal}
@@ -110,9 +143,8 @@ const DriverArrival = ({ navigation }: any) => {
             <TouchableOpacity
               activeOpacity={0.5}
               onPress={() => navigation.navigate("DriverProfile")}
-              style={tw`flex-row w-full items-center justify-between mt-6 ${
-                tripStart && `border-b border-[${theme.border}] pb-6`
-              }`}
+              style={tw`flex-row w-full items-center justify-between mt-6 ${tripStart && `border-b border-[${theme.border}] pb-6`
+                }`}
             >
               <View style={tw`flex-row items-center`}>
                 <Avatar
@@ -154,128 +186,66 @@ const DriverArrival = ({ navigation }: any) => {
             </TouchableOpacity>
 
             {/* {tripStart && ( */}
-              {tripEnd ? (
-                <StarRatings />
-              ) : (
-              <View
-                style={tw`py-6 flex-row border-b mb-4 border-[${theme.border}]`}
-              >
-                <View style={tw`h-[8rem] justify-evenly items-center`}>
-                  <View
-                    style={tw`bg-[${theme.fade_yellow}] h-12 w-12 rounded-full items-center justify-center`}
-                  >
-                    <View
-                      style={tw`bg-[${theme.yellow}] h-8 w-8 rounded-full items-center justify-center`}
-                    >
-                      <Foundation name="target-two" size={20} color="#35353f" />
-                    </View>
-                  </View>
-
-                  <Ionicons
-                    name="ellipsis-vertical"
-                    size={26}
-                    color="#9e9e9e"
-                  />
-
-                  <View
-                    style={tw`bg-[${theme.fade_yellow}] h-12 w-12 rounded-full items-center justify-center`}
-                  >
-                    <View
-                      style={tw`bg-[${theme.yellow}] h-8 w-8 rounded-full items-center justify-center`}
-                    >
-                      <FontAwesome5
-                        name="map-marker-alt"
-                        size={20}
-                        color="#35353f"
-                      />
-                    </View>
-                  </View>
-                </View>
-
-                <View style={tw`relative flex-1 pl-2`}>
-                  <View style={tw`flex-1 mb-4 flex-row items-center `}>
-                    {/* --------// */}
-                    <View style={tw`flex-1`}>
-                      <Text
-                        style={tw`text-[${theme.text}] text-[1.3rem] font-bold`}
-                      >
-                        {originSlice || addressSlice}
-                      </Text>
-                      <Text style={tw`text-[${theme.fade_text}] text-[.9rem]`}>
-                        {origin?.description || address}
-                      </Text>
-                    </View>
-                  </View>
-
-                  <View style={tw`flex-1 flex-row items-center`}>
-                    {/* --------// */}
-                    <View style={tw`flex-1`}>
-                      <Text
-                        style={tw`text-[${theme.text}] text-[1.3rem] font-bold`}
-                      >
-                        {destinationSlice}
-                      </Text>
-                      <Text style={tw`text-[${theme.fade_text}] text-[.9rem]`}>
-                        {destination?.description}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-
-              )
+            {tripEnd ? (
+              <StarRatings />
+            ) : (
+              <MarkerTarget
+                from={originSlice || addressSlice}
+                destination={destinationSlice}
+                from_description={origin?.description || address}
+                destination_description={destination?.description}
+              />
+            )
             }
-            
-
             <View style={tw`flex-row items-center mt-6`}>
 
               {tripEnd ? (
                 <View style={tw`flex-row items-center`}>
-                    <TouchableOpacity onPress={completeRating} activeOpacity={.5} style={tw`w-[9rem] bg-[${theme.input_base}] items-center justify-center rounded-3xl mx-6 h-[3.1rem]`}>
-                      <Text style={tw`text-lg font-bold text-center text-[${theme.text}]`}>
-                          Cancel
-                      </Text>
-                    </TouchableOpacity>
+                  <TouchableOpacity onPress={completeRating} activeOpacity={.5} style={tw`w-[9rem] bg-[${theme.input_base}] items-center justify-center rounded-3xl mx-6 h-[3.1rem]`}>
+                    <Text style={tw`text-lg font-bold text-center text-[${theme.text}]`}>
+                      Cancel
+                    </Text>
+                  </TouchableOpacity>
 
-                    <TouchableOpacity onPress={completeRating} activeOpacity={.5} style={tw`w-[9rem] bg-[#FEBB1B] items-center justify-center shadow-[#FEBB1B] shadow-2xl rounded-3xl mx-6 h-[3.1rem]`}>
-                      <Text style={tw`text-lg font-bold text-center`}>
-                          Submit
-                      </Text>
-                    </TouchableOpacity>
-                    
+                  <TouchableOpacity onPress={completeRating} activeOpacity={.5} style={tw`w-[9rem] bg-[#FEBB1B] items-center justify-center shadow-[#FEBB1B] shadow-2xl rounded-3xl mx-6 h-[3.1rem]`}>
+                    <Text style={tw`text-lg font-bold text-center`}>
+                      Submit
+                    </Text>
+                  </TouchableOpacity>
+
                 </View>
               ) : (
                 <>
-                {!tripStart && (
+                  {!tripStart && (
+                    <TouchableOpacity
+                      activeOpacity={0.5}
+                      style={tw`h-18 w-18 bg-[#ffe4a4] mr-4 rounded-full items-center justify-center`}
+                      onPress={() => navigation.navigate("CancelTrip")}
+                    >
+                      <FontAwesome5 name="times" size={26} color="#181a20" />
+                    </TouchableOpacity>
+                  )}
+
                   <TouchableOpacity
                     activeOpacity={0.5}
-                    style={tw`h-18 w-18 bg-[#ffe4a4] mr-4 rounded-full items-center justify-center`}
-                    onPress={() => navigation.navigate("CancelTrip")}
+                    style={tw`h-18 w-18 bg-[${theme.yellow}] mr-4 rounded-full items-center justify-center`}
                   >
-                    <FontAwesome5 name="times" size={26} color="#181a20" />
+                    <Ionicons
+                      name="chatbubble-ellipses-sharp"
+                      size={26}
+                      color="#181a20"
+                    />
                   </TouchableOpacity>
-                )}
-  
-                <TouchableOpacity
-                  activeOpacity={0.5}
-                  style={tw`h-18 w-18 bg-[${theme.yellow}] mr-4 rounded-full items-center justify-center`}
-                >
-                  <Ionicons
-                    name="chatbubble-ellipses-sharp"
-                    size={26}
-                    color="#181a20"
-                  />
-                </TouchableOpacity>
-  
-                <TouchableOpacity
-                  activeOpacity={0.5}
-                  style={tw`h-18 w-18 bg-[${theme.yellow}] rounded-full items-center justify-center`}
-                >
-                  <FontAwesome name="phone" size={26} color="#181a20" />
-                </TouchableOpacity>
+
+                  <TouchableOpacity
+                    activeOpacity={0.5}
+                    style={tw`h-18 w-18 bg-[${theme.yellow}] rounded-full items-center justify-center`}
+                  >
+                    <FontAwesome name="phone" size={26} color="#181a20" />
+                  </TouchableOpacity>
                 </>
               )}
-             
+
             </View>
           </View>
         </BottomSheetView>
