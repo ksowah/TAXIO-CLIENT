@@ -24,7 +24,7 @@ const theme = {
     fade_yellow: "#524322",
     directions: "#fec02b",
     input_focus: "#2a271f",
-    base_light_shade: "#1f222a",
+    base_light_shade: "#171920",
     mode: true
   },
 };
