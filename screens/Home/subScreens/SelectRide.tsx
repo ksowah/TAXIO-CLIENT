@@ -13,8 +13,8 @@ import { Feather } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import Button from "../../../components/Button";
-import { useRecoilValue } from "recoil";
-import { travelTimeInfo } from "../../../components/atoms/tripAtom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { priceAtom, travelTimeInfo } from "../../../components/atoms/tripAtom";
 
 
 const SelectRide = ({route, navigation}: any) => {
@@ -23,6 +23,7 @@ const SelectRide = ({route, navigation}: any) => {
   const [bike, setBike] = useState(false);
   const [standard, setStandard] = useState(true);
   const [premium, setPremium] = useState(false);
+  const [price, setPrice] = useRecoilState<any>(priceAtom)
 
   interface Props {
     checked: boolean;
@@ -95,9 +96,6 @@ const SelectRide = ({route, navigation}: any) => {
     });
   }
 
-  console.log(route.params);
-  
-
   const travelInfo: any = useRecoilValue(travelTimeInfo);
 
   const travelTime = travelInfo?.duration?.text
@@ -140,6 +138,7 @@ const SelectRide = ({route, navigation}: any) => {
 
 
     const proceedToPayment = () => {
+      setPrice(priceOfSelectedRide)
       navigation.navigate("Payment", {
         price: priceOfSelectedRide,
       });
