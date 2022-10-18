@@ -20,7 +20,6 @@ import { Theme } from "../../types";
 import { useMutation, useQuery } from "@apollo/client";
 import { ME_QUERY } from "../../queries/meQuery";
 import { RIDE_HISTORY_MUTATION } from "../../mutations/rideHistoryMutation";
-import { RIDE_HISTORY_QUERY } from "../../queries/rideHistoryQuery";
 
 const DestinationSelectedBottomSheet = ({
   navigation,

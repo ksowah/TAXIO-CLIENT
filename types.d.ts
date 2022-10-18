@@ -21,6 +21,16 @@ interface Theme {
     base_light_shade: string
 }
 
+interface Bookings {
+    date: string,
+    destination: string,
+    distance: string,
+    origin: string,
+    price: string,
+    time: string
+    
+}
+
 export interface RegisterInput {
     password: string;
   
