@@ -10,7 +10,12 @@ import { AntDesign } from '@expo/vector-icons';
 import MarkerTarget from '../bottomSheetUtils/MarkerTarget';
 
 
-const BookingsItem = ({item}: {item: Bookings}) => {
+interface Props {
+    item: Bookings
+    image: any
+}
+
+const BookingsItem = ({item, image}: Props) => {
 
     const theme: Theme = useContext(themeContext);
 
@@ -36,7 +41,7 @@ const BookingsItem = ({item}: {item: Bookings}) => {
                     <Avatar
                         rounded
                         size={60}
-                        source={require("../../assets/kevin.jpg")}
+                        source={image}
                     />
 
                     <View>
