@@ -12,8 +12,10 @@ import Button from "../../components/Button";
 import ModalPoup from "../../components/ModalPopup";
 import { useRecoilState } from "recoil";
 import { destinationAtom, destinationSelected, originAtom } from "../../components/atoms/tripAtom";
+import { useMutation } from "@apollo/client";
+import { CANCEL_RIDE_MUTATION } from "../../mutations/cancelRideMutation";
 
-const CancelTrip = ({ navigation }: any) => {
+const CancelTrip = ({ route, navigation }: any) => {
   const theme: Theme = useContext(themeContext);
 
   const [showModal, setShowModal] = useState(false)
@@ -34,6 +36,12 @@ const CancelTrip = ({ navigation }: any) => {
     setCheck(!check)
   }
 
+  const { id } = route.params
+
+  const [cancelBooking, {data, loading }] = useMutation(CANCEL_RIDE_MUTATION, {
+    variables: {id},
+  });
+
   return (
     <SafeAreaView style={tw`flex-1 bg-[${theme.base}]`}>
       <BackHeader title="Cancel Taxi" navigation={navigation} />
@@ -44,7 +52,9 @@ const CancelTrip = ({ navigation }: any) => {
               setIsDestinationSelected(false)
               setOrigin(null)
               setDestination(null)
-              navigation.replace("BaseHome")
+              cancelBooking().then(() => {
+                navigation.replace("BaseHome")
+              })
             }}
             setShowModal={setShowModal}
             showModal={showModal}
