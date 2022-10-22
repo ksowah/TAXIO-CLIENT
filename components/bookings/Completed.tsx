@@ -4,10 +4,10 @@ import { View, ScrollView } from 'react-native';
 import tw from 'twrnc'
 import { BOOKINGS_QUERY } from '../../queries/bookingsQuery';
 import { ME_QUERY } from '../../queries/meQuery';
-import { Theme } from '../../types';
+import { Bookings, Theme } from '../../types';
 import themeContext from '../config/themeContext';
 import BookingsItem from './BookingsItem';
-import { driverDetails } from './fakeDriverDetails';
+import { getRandomDriver } from './fakeDriverDetails';
 
 const Completed = () => {
 
@@ -21,18 +21,15 @@ const Completed = () => {
         },
       });
 
-    const getRandomDriver = () => {
-        return driverDetails[Math.floor(Math.random() * driverDetails.length)]
-    }
-    
-
 
   return (
     <View style={tw`flex-1`}>
     <ScrollView style={tw`flex-1 p-4 bg-[${theme.base}]`}>
       {
-        data?.getBookings.map((item: any, idx: any) => (
-          <BookingsItem image={getRandomDriver().image} key={idx} item={item} />
+        data?.getBookings.map((item: Bookings, idx: any) => (
+          !item.cancelled && (
+            <BookingsItem driver={getRandomDriver()} key={idx} item={item} />
+          )
         ))
 
       }

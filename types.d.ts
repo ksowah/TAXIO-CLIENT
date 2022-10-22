@@ -27,8 +27,15 @@ interface Bookings {
     distance: string,
     origin: string,
     price: string,
-    time: string
-    
+    time: string,
+    cancelled: boolean,
+}
+
+interface Driver {
+    name: string,
+    car: string,
+    plate: string,
+    image: ImageSourcePropType
 }
 
 export interface RegisterInput {

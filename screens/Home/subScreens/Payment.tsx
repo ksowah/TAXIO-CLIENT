@@ -11,6 +11,11 @@ import { Entypo } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import Button from "../../../components/Button";
+import { useMutation, useQuery } from "@apollo/client";
+import { BOOKINGS_MUTATION } from "../../../mutations/bookingsMutation";
+import { ME_QUERY } from "../../../queries/meQuery";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { addressAtom, destinationAtom, originAtom, travelTimeInfo } from "../../../components/atoms/tripAtom";
 
 const Payment = ({route, navigation }: any) => {
   const theme: Theme = useContext(themeContext);
@@ -111,6 +116,47 @@ const Payment = ({route, navigation }: any) => {
     setCheck6(true);
   };
 
+  const [origin, setOrigin] = useRecoilState<any>(originAtom);
+  const [destination, setDestination] = useRecoilState<any>(destinationAtom);
+
+  const originSlice = origin?.description.split(",")[0];
+  const destinationSlice = destination?.description;
+
+  const address = useRecoilValue<any>(addressAtom);
+  const addressSlice = address?.split(",")[0];
+
+  const distanceAndTime: any = useRecoilValue(travelTimeInfo)
+
+  const date = new Date().toLocaleString('en-US', { month: '2-digit', 
+  day: 'numeric', 
+  year: 'numeric', 
+  hour: 'numeric', 
+  minute: 'numeric', 
+  second: 'numeric', 
+  hour12: true })
+
+  const { data: session } = useQuery(ME_QUERY);
+
+  const [addToBookings, {data, loading }] = useMutation(BOOKINGS_MUTATION, {
+    variables: { data: { origin: originSlice,
+       destination: destinationSlice,
+        distance: distanceAndTime.distance.text,
+        time: distanceAndTime.duration.text,
+        price, 
+        date,
+        user: session?.me._id,
+      } },
+  });
+
+  const StartRide = () => {
+    addToBookings().then((res) => {
+      navigation.navigate("DriverArrival", {
+        booking: res.data?.bookings
+      })
+    })
+  }
+
+
   return (
     <SafeAreaView style={tw`flex-1 bg-[${theme.base}]`}>
       <BackHeader title="Payment Method" navigation={navigation} />
@@ -181,7 +227,9 @@ const Payment = ({route, navigation }: any) => {
       <View
         style={tw` h-[8rem] w-full border-t bg-[${theme.base}] border-[${theme.border}] absolute bottom-0 items-center justify-center`}
       >
-        <Button title="Continue" onPress={() => navigation.navigate("DriverArrival")}/>
+        <Button title="Continue" onPress={StartRide}
+          loading={loading}
+          />
       </View>
     </SafeAreaView>
   );
