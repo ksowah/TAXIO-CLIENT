@@ -9,6 +9,7 @@ query($user: String!){
         origin
         price
         time
+        cancelled
       }
   }
 `
