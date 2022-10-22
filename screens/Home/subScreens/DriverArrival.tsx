@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import tw from "twrnc";
 import themeContext from "../../../components/config/themeContext";
 import Map from "../../../components/Map";
-import { Theme } from "../../../types";
+import { Driver, Theme } from "../../../types";
 import { FontAwesome5 } from "@expo/vector-icons";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { Avatar } from "@rneui/base";
@@ -16,24 +16,22 @@ import {
   destinationAtom,
   destinationSelected,
   originAtom,
-  priceAtom,
   travelTimeInfo,
 } from "../../../components/atoms/tripAtom";
 import ModalPoup from "../../../components/ModalPopup";
 import StarRatings from "../../../components/bottomSheetUtils/StarRatings";
 import MarkerTarget from "../../../components/bottomSheetUtils/MarkerTarget";
-import { useMutation, useQuery } from "@apollo/client";
-import { BOOKINGS_MUTATION } from "../../../mutations/bookingsMutation";
-import { ME_QUERY } from "../../../queries/meQuery";
+import { getRandomDriver } from "../../../components/bookings/fakeDriverDetails";
 
-const DriverArrival = ({ navigation }: any) => {
+const DriverArrival = ({ route, navigation }: any) => {
   const theme: Theme = useContext(themeContext);
 
   const ref = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ["40%", "65%"], []);
 
   const [tripStart, setTripStart] = useState<boolean | any>(false);
-  const [tripEnd, setTripEnd] = useState<boolean | any>(false);
+  const [tripEnd, setTripEnd] = useState<boolean | any>(false);   
+  const [driver, setDriver] = useState<Driver | null>(null);   
 
 
   const [origin, setOrigin] = useRecoilState<any>(originAtom);
@@ -50,32 +48,9 @@ const DriverArrival = ({ navigation }: any) => {
   const [isDestinationSelected, setIsDestinationSelected] =
     useRecoilState<any>(destinationSelected);
 
-  const price = useRecoilValue(priceAtom)
-  const distanceAndTime: any = useRecoilValue(travelTimeInfo)
+    const travelInfo: any = useRecoilValue(travelTimeInfo);
 
-  // format todays date and time in months, days, years, hours, minutes and seconds
-  const date = new Date().toLocaleString('en-US', { month: '2-digit', 
-  day: 'numeric', 
-  year: 'numeric', 
-  hour: 'numeric', 
-  minute: 'numeric', 
-  second: 'numeric', 
-  hour12: true })
-
-  // get me query
-  const { data: session } = useQuery(ME_QUERY);
-
-  const [addToBookings, { loading }] = useMutation(BOOKINGS_MUTATION, {
-    variables: { data: { origin: originSlice,
-       destination: destinationSlice,
-        distance: distanceAndTime.distance.text,
-        time: distanceAndTime.duration.text,
-        price, 
-        date,
-        user: session?.me._id,
-      } },
-  });
-
+  const travelTime = travelInfo?.duration?.text
 
   useEffect(() => {
     setTimeout(() => {
@@ -91,6 +66,10 @@ const DriverArrival = ({ navigation }: any) => {
     }, 8000);
   }, [])
 
+  useEffect(() => {
+    setDriver(getRandomDriver())
+  }, [])
+
   const completeRating = () => {
     setIsDestinationSelected(false)
     setOrigin(null)
@@ -98,6 +77,7 @@ const DriverArrival = ({ navigation }: any) => {
     navigation.replace("BaseHome")
   }
 
+  const { _id } = route.params?.booking
 
 
   return (
@@ -106,7 +86,6 @@ const DriverArrival = ({ navigation }: any) => {
         onPress={() => {
           setTripStart(false)
           setTripEnd(true)
-          addToBookings()
           setShowModal(false);
         }}
         setShowModal={setShowModal}
@@ -137,7 +116,7 @@ const DriverArrival = ({ navigation }: any) => {
                 {tripStart ? "Trip to Destination" : tripEnd ? "Rate Driver" : "Driver is Arriving..."}
               </Text>
 
-              <Text style={tw`text-[${theme.text}] text-[1rem] ${tripEnd && "hidden"}`}>2mins</Text>
+              <Text style={tw`text-[${theme.text}] text-[1rem] ${tripEnd && "hidden"}`}>{tripStart ? travelTime : "2mins"}</Text>
             </View>
 
             <TouchableOpacity
@@ -150,17 +129,17 @@ const DriverArrival = ({ navigation }: any) => {
                 <Avatar
                   rounded
                   size={60}
-                  source={require("../../../assets/kevin.jpg")}
+                  source={driver?.image}
                 />
 
                 <View style={tw`ml-4`}>
                   <Text
                     style={tw`text-[${theme.text}] text-[1.1rem] font-bold mb-2`}
                   >
-                    Kelvin Sowah
+                    {driver?.name}
                   </Text>
                   <Text style={tw`text-[${theme.fade_text}] text-[0.8rem]`}>
-                    Mercedes-Benze E-Class
+                    {driver?.car}
                   </Text>
                 </View>
               </View>
@@ -180,7 +159,7 @@ const DriverArrival = ({ navigation }: any) => {
                 </View>
 
                 <Text style={tw`text-[${theme.text}] text-[.8rem] font-bold`}>
-                  HSW 4736 XK
+                 {driver?.plate}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -220,7 +199,7 @@ const DriverArrival = ({ navigation }: any) => {
                     <TouchableOpacity
                       activeOpacity={0.5}
                       style={tw`h-18 w-18 bg-[#ffe4a4] mr-4 rounded-full items-center justify-center`}
-                      onPress={() => navigation.navigate("CancelTrip")}
+                      onPress={() => navigation.navigate("CancelTrip", {id: _id})}
                     >
                       <FontAwesome5 name="times" size={26} color="#181a20" />
                     </TouchableOpacity>
