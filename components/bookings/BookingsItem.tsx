@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import tw from 'twrnc'
-import { Bookings, Theme } from '../../types';
+import { Bookings, Driver, Theme } from '../../types';
 import themeContext from '../config/themeContext';
 import { useContext, useState } from 'react';
 import { Avatar } from '@rneui/base';
@@ -12,18 +12,15 @@ import MarkerTarget from '../bottomSheetUtils/MarkerTarget';
 
 interface Props {
     item: Bookings
-    image: any
+    driver: Driver
 }
 
-const BookingsItem = ({item, image}: Props) => {
+const BookingsItem = ({item, driver}: Props) => {
 
     const theme: Theme = useContext(themeContext);
 
     const [drop, setDrop] = useState(false)
 
-    console.log(new Date(item?.date).toLocaleDateString())
-
-    // get time from date
     const date = new Date(item?.date).toLocaleString('en-US', { month: 'short', 
   day: 'numeric', 
   year: 'numeric', 
@@ -31,8 +28,7 @@ const BookingsItem = ({item, image}: Props) => {
   minute: 'numeric',
   hour12: true }).replace("at", "|")
 
-
-  console.log(date)  
+  console.log(item);  
 
     return (
         <View style={tw`flex w-full p-4 px-4 bg-[${theme.base_light_shade}] rounded-[2rem] mb-3`}>
@@ -41,20 +37,20 @@ const BookingsItem = ({item, image}: Props) => {
                     <Avatar
                         rounded
                         size={60}
-                        source={image}
+                        source={driver.image}
                     />
 
                     <View>
-                        <Text style={tw`text-[${theme.text}] font-bold text-[1.2rem] ml-4`}>Kelvin Sowah</Text>
-                        <Text style={tw`text-[${theme.fade_text}] text-[.9rem] ml-4 mt-2`}>Honda Mobillo</Text>
+                        <Text style={tw`text-[${theme.text}] font-bold text-[1.2rem] ml-4`}>{driver.name}</Text>
+                        <Text style={tw`text-[${theme.fade_text}] text-[.9rem] ml-4 mt-2`}>{driver.car}</Text>
                     </View>
                 </View>
 
                 <View style={tw`items-end`}>
-                    <View style={tw`bg-[#4aaf57] items-center justify-center w-[4rem] h-[1.4rem] mb-2 rounded-[6px]`}>
-                        <Text style={tw`text-white font-bold text-[.6rem]`}>Completed</Text>
+                    <View style={tw`${item.cancelled ? "bg-[#f75555]" : "bg-[#4aaf57]"} items-center justify-center w-[4rem] h-[1.4rem] mb-2 rounded-[6px]`}>
+                        <Text style={tw`text-white font-bold text-[.6rem]`}>{item.cancelled ? "Cancelled" : "Completed"}</Text>
                     </View>
-                    <Text style={tw`font-bold text-[${theme.text}] text-[.7rem]`}>HDG 6374 SY</Text>
+                    <Text style={tw`font-bold text-[${theme.text}] text-[.7rem]`}>{driver.plate}</Text>
                 </View>
             </View>
 
