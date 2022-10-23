@@ -25,6 +25,9 @@ Taxio is a taxi booking app with many features. Users upon registration can book
 - [FIgma Design](https://www.figma.com/file/rjJ1t4eZAg2rqcm1K4at7C/Taxio---Taxi-Booking-App-UI-Kit-(Community)-(Copy)?node-id=0%3A1)
 
 ## VIDEO DEMO (Enable sound for better experience)
+### PART 1
 https://user-images.githubusercontent.com/80095257/195698724-cb356e26-7ea6-4edc-8207-c7bad24e718a.mp4
+
+### PART 2
 https://user-images.githubusercontent.com/80095257/197404501-74537fcf-544d-4fc2-aee0-c8c7002e0c43.mp4
 
