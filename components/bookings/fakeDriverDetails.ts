@@ -1,4 +1,4 @@
-const driverDetails = [
+export const driverDetails = [
     {
     name: "Kelvin Sowah",
     car: "Honda Mobillo",
