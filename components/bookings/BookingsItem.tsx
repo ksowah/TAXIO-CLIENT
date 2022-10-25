@@ -28,8 +28,6 @@ const BookingsItem = ({item, driver}: Props) => {
   minute: 'numeric',
   hour12: true }).replace("at", "|")
 
-  console.log(item);  
-
     return (
         <View style={tw`flex w-full p-4 px-4 bg-[${theme.base_light_shade}] rounded-[2rem] mb-3`}>
             <View style={tw`border-b border-[${theme.border}] pb-4 flex-row items-center justify-between`}>

@@ -22,7 +22,7 @@ interface Theme {
 }
 
 interface Bookings {
-    date: string,
+    date: any,
     destination: string,
     distance: string,
     origin: string,
