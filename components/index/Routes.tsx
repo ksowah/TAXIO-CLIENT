@@ -25,6 +25,7 @@ import Payment from "../../screens/Home/subScreens/Payment";
 import DriverArrival from "../../screens/Home/subScreens/DriverArrival";
 import DriverProfile from "../../screens/driver/DriverProfile";
 import CancelTrip from "../../screens/driver/CancelTrip";
+import ChatScreen from "../chatInbox/ChatScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -169,6 +170,11 @@ const Routes: any = () => {
               options={{ headerShown: false }}
               name="CancelTrip"
               component={CancelTrip}
+            />            
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="ChatScreen"
+              component={ChatScreen}
             />            
           </Stack.Navigator>
         </NavigationContainer>
