@@ -1,12 +1,12 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import tw from 'twrnc'
-import { Driver, Theme } from '../../types';
+import { Chat, Driver, Theme } from '../../types';
 import themeContext from '../config/themeContext';
 import { useContext } from 'react';
 import { Avatar } from '@rneui/base';
 import { AntDesign } from '@expo/vector-icons';
 
-const ChatItem = ({driver, onPress, chats} : {driver: Driver, onPress?: () => void, chats?: Boolean}) => {
+const ChatItem = ({chat, onPress, chats} : {chat: Chat, onPress?: () => void, chats?: Boolean}) => {
 
     const theme: Theme = useContext(themeContext);
 
@@ -16,11 +16,11 @@ const ChatItem = ({driver, onPress, chats} : {driver: Driver, onPress?: () => vo
                 <Avatar
                     rounded
                     size={60}
-                    source={driver.image}
+                    source={chat.image}
                 />
 
                 <View>
-                    <Text style={tw`text-[${theme.text}] font-bold text-[1.2rem] ml-4`}>{driver.name}</Text>
+                    <Text style={tw`text-[${theme.text}] font-bold text-[1.2rem] ml-4`}>{chat.name}</Text>
                     <Text style={tw`text-[${theme.fade_text}] text-[.8rem] ml-4 mt-2`}>Incoming | Dec 19, 2024</Text>
                 </View>
             </View>
