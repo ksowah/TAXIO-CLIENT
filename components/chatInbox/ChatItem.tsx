@@ -27,8 +27,13 @@ const ChatItem = ({driver, onPress, chats} : {driver: Driver, onPress?: () => vo
 
             <View style={tw`items-end`}>
                 {
-                    chats ? 
-                    <Text>2</Text>
+                    chats ?
+                    <View style={tw`items-end`}>
+                    <View style={tw`h-[1.4rem] w-[1.4rem] bg-[${theme.yellow}] rounded-full items-center justify-center text-gray`}>
+                        <Text>2</Text>
+                    </View> 
+                    <Text style={tw`text-[${theme.fade_text}] text-[.8rem] mt-2`}>12:00 PM</Text>
+                    </View>
                     :
                     <AntDesign name="phone" size={24} color={theme.yellow} />
                 }
