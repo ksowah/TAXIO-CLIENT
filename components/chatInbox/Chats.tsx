@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import tw from 'twrnc'
-import { Driver, Theme } from '../../types';
+import { Chat, Driver, Theme } from '../../types';
 import { chatDetails } from '../bookings/fakeChatDetails';
 import { driverDetails } from '../bookings/fakeDriverDetails';
 import themeContext from '../config/themeContext';
@@ -18,8 +18,8 @@ const Chats = ({navigation}: any) => {
   return (
     <ScrollView showsHorizontalScrollIndicator={false} style={tw`flex-1 bg-[${theme.base}]`}>
         {
-            chatDetails.map((driver: any, idx: any) => (
-                <ChatItem chats={true} onPress={() => openChats(driver.name)} driver={driver} />
+            chatDetails.map((chat: Chat, idx: any) => (
+                <ChatItem chats={true} onPress={() => openChats(chat.name)} chat={chat} />
             ))
         }
     </ScrollView>
