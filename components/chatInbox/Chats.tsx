@@ -18,7 +18,7 @@ const Chats = ({navigation}: any) => {
     <ScrollView showsHorizontalScrollIndicator={false} style={tw`flex-1 bg-[${theme.base}]`}>
         {
             driverDetails.map((driver: Driver, idx: any) => (
-                <ChatItem onPress={() => openChats(driver.name)} driver={driver} />
+                <ChatItem chats={true} onPress={() => openChats(driver.name)} driver={driver} />
             ))
         }
     </ScrollView>
