@@ -1,12 +1,12 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import tw from 'twrnc'
-import { Bookings, Driver, Theme } from '../../types';
+import { Driver, Theme } from '../../types';
 import themeContext from '../config/themeContext';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { Avatar } from '@rneui/base';
 import { AntDesign } from '@expo/vector-icons';
 
-const ChatItem = ({driver, onPress} : {driver: Driver, onPress?: () => void}) => {
+const ChatItem = ({driver, onPress, chats} : {driver: Driver, onPress?: () => void, chats?: Boolean}) => {
 
     const theme: Theme = useContext(themeContext);
 
@@ -26,7 +26,12 @@ const ChatItem = ({driver, onPress} : {driver: Driver, onPress?: () => void}) =>
             </View>
 
             <View style={tw`items-end`}>
-                <AntDesign name="phone" size={24} color={theme.yellow} />
+                {
+                    chats ? 
+                    <Text>2</Text>
+                    :
+                    <AntDesign name="phone" size={24} color={theme.yellow} />
+                }
             </View>
         </TouchableOpacity>
     );
