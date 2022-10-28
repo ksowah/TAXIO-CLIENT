@@ -1,9 +1,9 @@
 import { useContext } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import tw from 'twrnc'
 import { Driver, Theme } from '../../types';
 import { getRandomChat } from '../bookings/fakeChatDetails';
-import { driverDetails, getRandomDriver } from '../bookings/fakeDriverDetails';
+import { driverDetails } from '../bookings/fakeDriverDetails';
 import themeContext from '../config/themeContext';
 import ChatItem from './ChatItem';
 
