@@ -44,6 +44,7 @@ interface Chat {
     image: ImageSourcePropType
     message: string
     count: string
+    time: string
 }
 
 export interface RegisterInput {
