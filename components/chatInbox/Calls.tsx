@@ -1,9 +1,8 @@
 import { useContext } from 'react';
 import { ScrollView } from 'react-native';
 import tw from 'twrnc'
-import { Driver, Theme } from '../../types';
-import { getRandomChat } from '../bookings/fakeChatDetails';
-import { driverDetails } from '../bookings/fakeDriverDetails';
+import { Chat, Theme } from '../../types';
+import { chatDetails, getRandomChat } from '../bookings/fakeChatDetails';
 import themeContext from '../config/themeContext';
 import ChatItem from './ChatItem';
 
@@ -14,8 +13,8 @@ const Calls = () => {
   return (
     <ScrollView showsHorizontalScrollIndicator={false} style={tw`flex-1 bg-[${theme.base}]`}>
         {
-            driverDetails.map((chat: Driver, idx: any) => (
-                <ChatItem chat={getRandomChat()} />
+            chatDetails.map((chat: Chat, idx: any) => (
+                <ChatItem key={idx} chat={getRandomChat()} />
             ))
         }
     </ScrollView>
