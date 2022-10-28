@@ -52,3 +52,7 @@ export const chatDetails: Chat[] = [
     image: require("../../assets/drivers/driver10.jpg"),
   },
 ]
+
+export const getRandomChat = () => {
+    return chatDetails[Math.floor(Math.random() * chatDetails.length)]
+}
