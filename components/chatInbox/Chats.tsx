@@ -19,7 +19,7 @@ const Chats = ({navigation}: any) => {
     <ScrollView showsHorizontalScrollIndicator={false} style={tw`flex-1 bg-[${theme.base}]`}>
         {
             chatDetails.map((chat: Chat, idx: any) => (
-                <ChatItem key={idx} chats={true} onPress={() => openChats(chat.name)} chat={chat} />
+                <ChatItem count={chat.count} message={chat.message} newChat={chat.newChat} key={idx} chats={true} onPress={() => openChats(chat.name)} chat={chat} />
             ))
         }
     </ScrollView>
