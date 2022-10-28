@@ -42,6 +42,8 @@ interface Chat {
     newChat: boolean,
     name: string,
     image: ImageSourcePropType
+    message: string
+    count: string
 }
 
 export interface RegisterInput {
