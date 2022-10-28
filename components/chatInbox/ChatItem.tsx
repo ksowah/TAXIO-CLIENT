@@ -13,11 +13,18 @@ interface Props {
     newChat?: boolean;
     message?: string;
     count?: string;
+    time?: string;
 }
 
-const ChatItem = ({ chat, onPress, chats, newChat, message, count }: Props) => {
+const ChatItem = ({ chat, onPress, chats, newChat, message, count, time }: Props) => {
 
     const theme: Theme = useContext(themeContext);
+
+    const truncateMessage = () => {
+        if(message){
+            return (message!.length > 25) ? message!.substr(0, 25-1) + '...' : message;
+        }
+    };
 
     return (
         <TouchableOpacity onPress={onPress} activeOpacity={.6} style={tw`p-4 flex-row items-center justify-between`}>
@@ -30,7 +37,7 @@ const ChatItem = ({ chat, onPress, chats, newChat, message, count }: Props) => {
 
                 <View>
                     <Text style={tw`text-[${theme.text}] font-bold text-[1.2rem] ml-4`}>{chat.name}</Text>
-                    <Text style={tw`text-[${theme.fade_text}] text-[.8rem] ml-4 mt-2`}>{message}</Text>
+                    <Text style={tw`text-[${theme.fade_text}] text-[.8rem] ml-4 mt-2`}>{message ? truncateMessage() : "Incoming | Dec 19, 2022"}</Text>
                 </View>
             </View>
 
@@ -44,7 +51,7 @@ const ChatItem = ({ chat, onPress, chats, newChat, message, count }: Props) => {
                                     <Text>{count}</Text>
                                 </View>
                             }
-                            <Text style={tw`text-[${theme.fade_text}] text-[.8rem] mt-2`}>12:00 PM</Text>
+                            <Text style={tw`text-[${theme.fade_text}] text-[.8rem] mt-2`}>{time}</Text>
                         </View>
                         :
                         <AntDesign name="phone" size={24} color={theme.yellow} />
